@@ -19,6 +19,7 @@ public class Driver {
             if (opp.equals("exit")) {
                 System.out.println("Goodbye!");
                 run = false;
+                kb.close();
                 return;
             }
             System.out.print("Please enter your first number: ");
@@ -58,5 +59,6 @@ public class Driver {
                 System.out.println(" Please try again");
             }
         }
+        kb.close();
     }
 }

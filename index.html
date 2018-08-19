@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>DOM</title>
+</head>
+<body>
+<div>
+    <div>
+        <h3>
+            Sum: <span id="sum"></span>
+        </h3>
+        <h5 id="currentTime"></h5>
+    </div>
+    <div>
+        <h1>
+            United <span data-customAttr="USA">States</span> of America (<span>USA</span>)
+        </h1>
+        <div>
+            <a>Click Here</a><a>Click Here</a><a>Click Here</a><a>Click Here</a><a>Click
+            Here</a>
+        </div>
+        <a>Click Here</a> <a>Click <span>Here1</span></a> <a>Click Here</a>
+        <div>
+            <select name="colors">
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+                <option value="red" selected="selected">Red</option>
+                <option value="purple">Purple</option>
+                <option value="yellow" selected="selected">Yellow</option>
+            </select>
+        </div>
+    </div>
+    <p id="helloWorld">Hello, World!</p>
+    <div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+            </tr>
+            <tr>
+                <td class="empName">John</td>
+                <td>Sales</td>
+            </tr>
+            <tr>
+                <td class="empName">Amy</td>
+                <td>Finance</td>
+            </tr>
+            <tr>
+                <td class="empName">Austin</td>
+                <td>Sales</td>
+            </tr>
+            <tr>
+                <td class="empName">Katie</td>
+                <td>Marketing</td>
+            </tr>
+            <tr>
+                <td class="empName" data-customAttr="court">Courtney</td>
+                <td>Sales</td>
+            </tr>
+            <tr>
+                <td class="empName">Scout</td>
+                <td>Sales</td>
+            </tr>
+        </table>
+    </div>
+    <form id="firstForm">
+        <a>Click <span>Here2</span></a> <input type="text"
+                                               data-customAttr="7"/><br/> <input type="text" data-customAttr="24"/><br/>
+        <input type="radio" name="favoriteAnimal" value="dog"/>Dog<br/> <input
+            type="radio" name="favoriteColor" value="blue"/>Blue<br/> <input
+            id="num1" class="nums" type="text"/><br/> <input type="radio"
+                                                             name="favoriteAnimal" value="cat"/>Cat<br/> <input
+            type="radio"
+            name="favoriteColor" value="red"/>Red<br/> <input type="radio"
+                                                              name="favoriteAnimal" value="horse"/>Horse<br/> <input
+            type="radio" name="favoriteAnimal" value="dolphin"/>Dolphin<br/> <a>Click
+        <span>Here</span>
+    </a><br/> <input type="radio" name="favoriteAnimal" value="eagle"/>Eagle<br/>
+        <input type="radio" name="favoriteColor" value="green"/>Green<br/>
+        <input type="radio" name="favoriteColor" value="orange"/>Orange<br/>
+        <select name="hobbies">
+            <option value="photography">Photography</option>
+            <option value="football" selected="selected">Football</option>
+            <option value="kayaking" selected="selected">Kayaking</option>
+            <option value="hiking">Hiking</option>
+            <option value="programming" selected="selected">Programming</option>
+        </select> <input id="num2" class="nums" type="text"/> <select name="skills">
+        <option value="java">Java</option>
+        <option value="net">.NET</option>
+        <option value="dom" selected="selected">DOM</option>
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+        <option value="javascript" selected="selected">Javascript</option>
+    </select>
+    </form>
+</div>
+<a>Click Here</a>
+<a>Click <span data-customAttr="500">Here3</span></a>
+<a>Click Here</a>
+<script type="text/javascript">
+    //TODO: Javascript homework
+    // Question 1
+    function getUSA() {
+        console.log("Question 1");
+        let spans = document.getElementsByTagName("span");
+        for (let i = 0; i < spans.length; i++) {
+            if (spans.item(i).innerText === "USA") {
+                console.log(spans.item(i).innerHTML);
+            }
+        }
+    }
+
+    getUSA();
+
+    // Question 2
+    function getPeopleInSales() {
+        console.log("\nQuestion 2");
+        let row = document.getElementsByTagName("tr");
+        for (let i = 0; i < row.length; i++) {
+            let temp = row.item(i);
+            if (temp.children[1].innerText === "Sales") {
+                console.log(temp.children[0].innerText);
+            }
+        }
+    }
+
+    getPeopleInSales();
+
+    // Question 3
+    function getAnchorChildren() {
+        console.log("\nQuestion 3");
+        let elements = document.getElementsByTagName("a");
+        for (let i = 0; i < elements.length; i++) {
+            for (let j = 0; j < elements.item(i).children.length; j++) {
+                if (elements.item(i).children[j].tagName === "SPAN") {
+                    console.log(elements.item(i).children[j].innerText);
+                }
+            }
+        }
+    }
+
+    getAnchorChildren();
+
+    // Question 4
+    function getSkills() {
+        console.log("\nQuestion 4");
+        let select = document.getElementsByName("skills");
+        select = select.item(0);
+        for (let i = 0; i < select.children.length; i++) {
+            if (select.item(i).getAttribute("selected") === "selected") {
+                console.log(select.children[i].value + " : " + select.children[i].innerText);
+            }
+        }
+    }
+
+    getSkills();
+
+    // Question 5
+    function getCustomAttribute() {
+        console.log("\nQuestion 5");
+        let items = document.querySelectorAll("[data-customAttr]");
+        for (let i = 0; i < items.length; i++) {
+            console.log(items.item(i).tagName + " : " + items.item(i).getAttribute("data-customAttr"));
+        }
+    }
+
+    getCustomAttribute();
+
+    // Question 6
+    function setNumber() {
+        let firstNum = document.getElementById("num1").value;
+        let secondNum = document.getElementById("num2").value;
+        let sumArea = document.getElementById("sum");
+
+        if (isNaN(firstNum) || isNaN(secondNum) || !firstNum || !secondNum) {
+            sumArea.innerText = "Cannot Add";
+        } else {
+            sumArea.innerText = parseInt(firstNum) + parseInt(secondNum);
+        }
+    }
+
+    document.getElementById("num1").addEventListener("change", setNumber);
+    document.getElementById("num2").addEventListener("change", setNumber);
+
+    // Question 7
+    document.getElementsByName("skills").item(0).addEventListener("change", function () {
+        alert("Are you sure " + this.value + " is one of your skills?");
+    });
+
+    // Question 8
+    function addColorChangeListener() {
+        let colors = document.getElementsByName("favoriteColor");
+        for (let i = 0; i < colors.length; i++) {
+            colors.item(i).addEventListener("change", function () {
+                alert("You like " + this.value + " more than " + this.style.backgroundColor + "?!?!");
+                for (let j = 0; j < colors.length; j++) {
+                    colors.item(j).style.backgroundColor = this.value;
+                }
+            });
+        }
+    }
+
+    addColorChangeListener();
+
+    // Question 9
+    function addEmployeeNameListeners() {
+        let employees = document.getElementsByClassName("empName");
+        for (let i = 0; i < employees.length; i++) {
+            employees.item(i).addEventListener("mouseover", function () {
+                console.log("In a function!");
+                if (this.style.color === "white") {
+                    this.style.color = "black";
+                } else {
+                    this.style.color = "white";
+                }
+            });
+        }
+    }
+
+    addEmployeeNameListeners();
+
+    // Question 10
+    let setTime = setInterval(function () {
+        let timer = document.getElementById("currentTime");
+        let time = new Date(Date.now());
+        timer.innerText = time.toLocaleTimeString();
+    }, 100);
+
+    window.onload = function () {
+        setTime;
+    };
+
+    // Question 11
+    document.getElementById("helloWorld").addEventListener("click", function () {
+        setTimeout(function () {
+            let r = Math.floor(Math.random()*255);
+            let g = Math.floor(Math.random()*255);
+            let b = Math.floor(Math.random()*255);
+            console.log(r + " " + g + " " + b);
+            document.getElementById("helloWorld").style.color = "rgb(" + r + ", " + b + ", " + b + ")";
+        }, 3000)
+    });
+
+    // Question 12
+    function walkTheDOM(node, func) {
+        func(node);
+        node = node.firstChild;
+        while (node) {
+            walkTheDOM(node, func);
+            node = node.nextSibling;
+        }
+    }
+
+</script>
+</body>
+</html>
+
+

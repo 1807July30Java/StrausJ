@@ -20,10 +20,11 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username", username);
             session.setAttribute("password", password);
             session.setAttribute("problem", null);
-            response.sendRedirect("home");
-        } else
+            response.sendRedirect("profile");
+        } else {
             session.setAttribute("problem", "Incorrect Password");
             response.sendRedirect("login");
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

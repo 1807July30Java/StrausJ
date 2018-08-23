@@ -6,6 +6,6 @@ import com.revature.dao.EmployeeDAOImpl;
 public class AuthenticationUtil {
     public static boolean isValidUser(String username, String password) {
         EmployeeDAO ed = new EmployeeDAOImpl();
-        return ed.getEmployeeByUName(username, password) != null;
+        return ed.getEmployeeByUNamePass(username, password) != null;
     }
 }

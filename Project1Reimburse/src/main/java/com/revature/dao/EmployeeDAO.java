@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface EmployeeDAO {
     Employee getEmployeeByID(int employeeId);
-    Employee getEmployeeByUName(String employeeUsername, String employeePass);
+    Employee getEmployeeByUNamePass(String employeeUsername, String employeePass);
+    Employee getEmployeeByUName(String employeeUsername);
     boolean addEmployee(Employee e);
     List<Employee> getAllManaged(Employee manager);
 

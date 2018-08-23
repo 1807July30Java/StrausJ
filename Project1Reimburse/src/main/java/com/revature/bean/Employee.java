@@ -7,12 +7,12 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String username;
-    private String password;
+    private int password;
     private String email;
     private int managedBy;
     private boolean isManager;
 
-    public Employee(int employeeId, String firstName, String lastName, String username, String password, String email, int managedBy, boolean isManager) {
+    public Employee(int employeeId, String firstName, String lastName, String username, int password, String email, int managedBy, boolean isManager) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,13 +23,23 @@ public class Employee {
         this.isManager = isManager;
     }
 
-    public Employee(String firstName, String lastName, String username, String password, String email, int managedBy, boolean isManager) {
+    public Employee(int employeeId, String firstName, String lastName, String username, String password, String email, int managedBy, boolean isManager) {
+        this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
+        this.password = password.hashCode();
         this.email = email;
         this.managedBy = managedBy;
+        this.isManager = isManager;
+    }
+
+    public Employee(int employeeId, String firstName, String lastName, String username, String email, boolean isManager) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
         this.isManager = isManager;
     }
 
@@ -65,11 +75,11 @@ public class Employee {
         this.username = username;
     }
 
-    public String getPassword() {
+    public int getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(int password) {
         this.password = password;
     }
 

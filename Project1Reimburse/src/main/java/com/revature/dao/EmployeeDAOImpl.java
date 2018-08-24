@@ -138,14 +138,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public List<Employee> getAllManaged(Employee manager) {
+    public List<Employee> getAllManaged(int managerID) {
         PreparedStatement pstmt;
         List<Employee> employees = new ArrayList<>();
 
         try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
             String sql = "SELECT * FROM EMPLOYEE WHERE MANAGED_BY = ?";
             pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, manager.getEmployeeId());
+            pstmt.setInt(1, managerID);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -154,7 +154,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 String lName = rs.getString("L_NAME");
                 String uName = rs.getString("USERNAME");
                 String email = rs.getString("EMAIL");
-                int manageBy = rs.getInt("MANAGED_BY");
                 boolean isManager = rs.getBoolean("IS_MANAGER");
                 employees.add(new Employee(id, fName, lName, uName, email, isManager));
             }

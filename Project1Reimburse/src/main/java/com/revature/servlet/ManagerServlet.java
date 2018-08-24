@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "ProfileServlet", urlPatterns = "/profile")
-public class ProfileServlet extends HttpServlet {
+@WebServlet(name = "ManagerServlet", urlPatterns = "/managerProfile")
+public class ManagerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -21,9 +21,9 @@ public class ProfileServlet extends HttpServlet {
         // Check whether a session exists
         if (session != null && session.getAttribute("username") != null) {
             if (AuthenticationUtil.getEmployeeType(session.getAttribute("username").toString())) {
-                request.getRequestDispatcher("/managerProfile").forward(request, response);
+                request.getRequestDispatcher("views/managerProfile.html").forward(request, response);
             } else {
-                request.getRequestDispatcher("/employeeProfile").forward(request, response);
+                response.sendError(401, "You do not have sufficient access privileges");
             }
         } else {
             response.sendRedirect("login");

@@ -19,15 +19,18 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Profile
+                        <a class="nav-link" href="/profile">Profile
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="/requestManage">Approve Requests</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="/newEmployee">New Employee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/newRequest">New Request</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
@@ -44,17 +47,46 @@
             <div class="card card-signin">
                 <div class="card-body">
                     <h5 class="card-title">Employees</h5>
-                    <table class="table">
-                        <thead>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
                             <tr>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Username</th>
                                 <th scope="col">Email</th>
                             </tr>
-                        </thead>
-                        <tbody id="employeeTable"></tbody>
-                    </table>
+                            </thead>
+                            <tbody id="employeeTable"></tbody>
+                        </table>
+                    </div>
+                    <div class="text-center"><a href="/newEmployee">Add a New Employee</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 mx-auto">
+            <div class="card card-signin">
+                <div class="card-body">
+                    <h5 class="card-title">Requests</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date Submitted</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Receipt</th>
+                            </tr>
+                            </thead>
+                            <tbody id="requestTable"></tbody>
+                        </table>
+                    </div>
+                    <div class="text-center"><a href="/newRequest">Add a New Request</a></div>
                 </div>
             </div>
         </div>

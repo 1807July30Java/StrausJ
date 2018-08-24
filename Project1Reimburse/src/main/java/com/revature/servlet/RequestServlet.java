@@ -10,23 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "ProfileServlet", urlPatterns = "/profile")
-public class ProfileServlet extends HttpServlet {
+@WebServlet(name = "RequestServlet", urlPatterns = "/newRequest")
+public class RequestServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         // Check whether a session exists
-        if (session != null && session.getAttribute("username") != null) {
-            if (AuthenticationUtil.getEmployeeType(session.getAttribute("username").toString())) {
-                request.getRequestDispatcher("/managerProfile").forward(request, response);
-            } else {
-                request.getRequestDispatcher("/employeeProfile").forward(request, response);
-            }
-        } else {
-            response.sendRedirect("login");
-        }
+//        if (session != null && session.getAttribute("username") != null) {
+            request.getRequestDispatcher("views/newRequest.html").forward(request, response);
+//        } else {
+//            response.sendRedirect("login");
+//        }
     }
 }

@@ -19,16 +19,37 @@ public class DispatcherUtil {
                 if (get.equals("managed")) {
                     Employee e = ed.getEmployeeByUName(username);
                     return od.writeValueAsString(ed.getAllManaged(e.getEmployeeId()));
+                } else if (get.matches("-?\\d+(\\.\\d+)?")) {
+                    Employee e = ed.getEmployeeByID(Integer.parseInt(get));
+                    return od.writeValueAsString(e);
                 }
             } else if (type.equals("request")) {
-                if (get.equals("open")) {
-                    Employee e = ed.getEmployeeByUName(username);
-                    return od.writeValueAsString(rd.getAllEmployeeRequest(e.getEmployeeId(), 0));
+                switch (get) {
+                    case "open": {
+                        Employee e = ed.getEmployeeByUName(username);
+                        return od.writeValueAsString(rd.getEmployeeRequestByCode(e.getEmployeeId(), 0));
+                    }
+                    case "all": {
+                        Employee e = ed.getEmployeeByUName(username);
+                        return od.writeValueAsString(rd.getAllEmployeeRequest(e.getEmployeeId()));
+                    }
+                    case "managed": {
+                        Employee e = ed.getEmployeeByUName(username);
+                        return od.writeValueAsString(rd.getAllManagerRequest(e.getEmployeeId(), 1));
+                    }
                 }
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return "null";
+    }
+
+    public void processPost(String type, String get, int id, int newCode) {
+        if (type.equals("request")) {
+            if (get.equals("update")) {
+                rd.updateStatus(id, newCode);
+            }
+        }
     }
 }

@@ -48,7 +48,7 @@ public class RequestDAOImpl implements RequestDAO {
     }
 
     @Override
-    public List<Request> getAllEmployeeRequest(int employeeID, int statusCode) {
+    public List<Request> getEmployeeRequestByCode(int employeeID, int statusCode) {
         List<Request> rl = new ArrayList<>();
         PreparedStatement pstmt;
 
@@ -57,6 +57,34 @@ public class RequestDAOImpl implements RequestDAO {
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, employeeID);
             pstmt.setInt(2, statusCode);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int reqID = rs.getInt("REQUEST_ID");
+                int eID = rs.getInt("EMPLOYEE_ID");
+                double amount = rs.getDouble("AMOUNT");
+                int status = rs.getInt("STATUS");
+                String desc = rs.getString("DESCRIPTION");
+                LocalDateTime dateTime = rs.getTimestamp("DATE_TIME").toLocalDateTime();
+                rl.add(new Request(reqID, eID, amount, status, desc, dateTime));
+            }
+        } catch (SQLException | IOException e) {
+            System.out.println("Cannot Connect");
+        }
+        return rl;
+    }
+
+    @Override
+    public List<Request> getAllEmployeeRequest(int employeeID) {
+        List<Request> rl = new ArrayList<>();
+        PreparedStatement pstmt;
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE EMPLOYEE_ID = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, employeeID);
+
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -81,29 +109,30 @@ public class RequestDAOImpl implements RequestDAO {
         EmployeeDAO ed = new EmployeeDAOImpl();
         List<Employee> managed = ed.getAllManaged(managerID);
 
-        if (managerID <= 0 || statusCode < -1 || statusCode > 1)
+        if (managerID <= 0 || statusCode < 0 || statusCode < 3)
 
-        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
-            for (Employee aManaged : managed) {
-                String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME FROM REQUEST WHERE EMPLOYEE_ID = ? AND STATUS = ?";
-                pstmt = con.prepareStatement(sql);
-                pstmt.setInt(1, aManaged.getEmployeeId());
-                pstmt.setInt(2, statusCode);
-                ResultSet rs = pstmt.executeQuery();
+            try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+                for (Employee aManaged : managed) {
+                    String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE EMPLOYEE_ID = ? AND STATUS = ?";
+                    pstmt = con.prepareStatement(sql);
+                    pstmt.setInt(1, aManaged.getEmployeeId());
+                    pstmt.setInt(2, statusCode);
+                    ResultSet rs = pstmt.executeQuery();
 
-                while (rs.next()) {
-                    int reqID = rs.getInt("REQUEST_ID");
-                    int eID = rs.getInt("EMPLOYEE_ID");
-                    double amount = rs.getDouble("AMOUNT");
-                    int status = rs.getInt("STATUS");
-                    String desc = rs.getString("DESCRIPTION");
-                    LocalDateTime dateTime = rs.getTimestamp("DATE_TIME").toLocalDateTime();
-                    rl.add(new Request(reqID, eID, amount, status, desc, dateTime));
+                    while (rs.next()) {
+                        int reqID = rs.getInt("REQUEST_ID");
+                        int eID = rs.getInt("EMPLOYEE_ID");
+                        double amount = rs.getDouble("AMOUNT");
+                        int status = rs.getInt("STATUS");
+                        String desc = rs.getString("DESCRIPTION");
+                        LocalDateTime dateTime = rs.getTimestamp("DATE_TIME").toLocalDateTime();
+                        rl.add(new Request(reqID, eID, amount, status, desc, dateTime));
+                    }
                 }
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+                System.out.println("Cannot Connect");
             }
-        } catch (SQLException | IOException e) {
-            System.out.println("Cannot Connect");
-        }
         return rl;
     }
 
@@ -114,8 +143,8 @@ public class RequestDAOImpl implements RequestDAO {
             return false;
         }
 
-        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)){
-            String sql = "INSERT INTO REQUEST (EMPLOYEE_ID, STATUS, DESCRIPTION, RECIEPT, DATE_TIME, AMOUNT) VALUES (?,?,?,?,?,?)";
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "INSERT INTO REQUEST (EMPLOYEE_ID, STATUS, DESCRIPTION, RECEIPT, DATE_TIME, AMOUNT) VALUES (?,?,?,?,?,?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, r.getEmployeeId());
             pstmt.setInt(2, r.getStatus());
@@ -140,8 +169,8 @@ public class RequestDAOImpl implements RequestDAO {
             return false;
         }
 
-        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)){
-            String sql = "UPDATE REQUEST SET RECIEPT = ? WHERE REQUEST_ID = ?";
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "UPDATE REQUEST SET RECEIPT = ? WHERE REQUEST_ID = ?";
             pstmt = con.prepareStatement(sql);
             pstmt.setBinaryStream(1, blob);
             pstmt.setInt(2, requestID);
@@ -152,6 +181,29 @@ public class RequestDAOImpl implements RequestDAO {
         } catch (SQLException | IOException e) {
             System.out.println("Cannot Connect");
         }
+        return false;
+    }
+
+    @Override
+    public boolean updateStatus(int requestID, int newStatus) {
+        PreparedStatement pstmt;
+        if (requestID < 0 || newStatus < 0 || newStatus > 3) {
+            return false;
+        }
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "UPDATE REQUEST SET STATUS = ? WHERE REQUEST_ID = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, newStatus);
+            pstmt.setInt(2, requestID);
+
+            if (pstmt.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (SQLException | IOException e) {
+            System.out.println("Cannot Connect");
+        }
+
         return false;
     }
 }

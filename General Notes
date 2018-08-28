@@ -1,0 +1,1130 @@
+******************** Monday July 30th ********************
+
+Servlets - Java class that can handle HTTP requests.
+
+Project 0:
+Paired Simple Bank Simulation
+Week 1-3
+Using Java, SQL, JDBC
+	Simulate a simple bank from console. Log in, view accounts etc.
+
+Project 1:
+Full Stack, Individual project
+Week 3-5
+Using Java, SQL, UI
+	-Servlets (HTML, CSS, JS)
+
+Project 2:
+Groups (4ish) Self Picked
+Week 5-7
+Using Java, Spring, Hibernate, Angular
+	-CI Pipeline
+
+Project 3:
+Full Batch (Everyone)
+Using Java, Micro services, Angular, Spring, Hibernate, Etc.
+Showcase: Capstone essentially.
+
+
+Assignment:
+Create a repo
+Add a file called presentation.txt
+	-With a presentation topic inside.
+		This will be a 3 minute presentation on any topic using any materials
+		Will happen Tuesday, Wednesday, Thursday mornings
+
+
+JVM:
+	Java virtual machine
+		Allows the Write once, run anywhere
+
+JRE:
+	Java runtime environment
+		The tools needed to run Java (Plus any additional libraries)
+
+JDK:
+	Java Development Kit
+		The tools needed to develop and create Java programs
+
+
+Class Members
+	Instance Variables
+	Instance Methods
+		States and behaviors specific to an object
+
+	Static Variables
+	Static Methods
+		States and behaviors of the class itself
+
+	Constructor
+		Used to create objects/Instantiate a class
+
+
+
+
+
+******************** Tuesday July 31st ********************
+
+Pillars of OOP
+	Inheritance
+		-Child objects (Classes)
+			Obtain states and behaviors from Parent classes
+		-No multiple inheritance
+		-Keyword: Extends
+
+	Polymorphism
+		-Overriding: Redefining a method with the same signature within a child class
+		-Overloading: Many forms of a given method where the number and type of parameters can vary as well as define which version will be executed
+		-Multiple "Is-A" relationships
+		-An object can take on attributes of many types (Classes)
+
+	Encapsulation
+		-Controlling access to inner state of a class
+		-Private fields (Which are only internally accessible)
+
+	Abstraction (Sometimes omitted from Pillars)
+		-Exposing only the functionality and not the implementation
+
+
+Code Blocks
+	-Run before the constructor every time you instantiate a class
+	-May be used for logging etc.
+
+Static Code Blocks
+	-Run exactly once
+	-The first time it passes through the JVM
+
+
+Access Modifiers
+	-Keywords that control how and when things can be accessed
+		Public: Any class in any package can access the item (Open access)
+		Default: No written modifier (It's the default...), Any class within the same package can access
+		Protected: Can only be accessed within the same package or any subclasses through inheritance
+			Cannot be used on a class (Methods & Variables only)
+		Private: Can only be accessed within the same class
+			Also not used on classes except for a private inner class (Nested classes)
+
+Method Signature: Method Name + Parameter List
+
+Variable Scopes
+	Static/Class: Declared and usable within the class
+		-Receives a default value
+		-Keyword: static
+	Method/Local: Declared and usable within a method
+		-Does not receive a default value
+	Block/Loop: Declared and usable within a given control statement
+	Instance: Declared and usable within a particular object
+		-Keyword: this
+
+Shadowing
+	What happens with variables with the same name but declared in differing scopes
+	Also happens between subclass and superclass variables
+	-Use of "this" keyword helps to prevent this
+		Innermost scope (narrowest) is the one that takes precedence
+
+Interfaces
+	Defines the structure of a class with no implementation
+		-Java 8 allows you to define default methods within an interface. "Kinda implementation"
+	Implemented by classes (EG: public class Truckski implements Steerable)
+	Interfaces can extend each other
+	Methods are implicitly public and abstract
+	Marker Interface: An interface with no methods declared
+	Any variables declared within an interface are implicitly public static and final
+
+Abstract Classes
+	Keyword: abstract
+	Any class using the above keyword
+	Any class that has abstract members must also be declared an abstract class
+	An abstract class may still have concrete members
+	
+
+
+
+
+******************** Wednesday August 1st ********************
+
+Homework:
+Enthuware - Foundations Test (Score Screenshot) due Monday August 6th
+HW #1 - #'s 1-5 due Friday by 5 pm. 6-20 due Monday Morning
+
+
+
+
+******************** Thursday August 2nd ********************
+
+Exceptions
+	Throwable (Interface)
+		Error (Class)
+			-Usually not handled programatically
+
+		Exception (Class)
+			-Two types of exceptions: Checked and Unchecked
+			Runtime Exception (<- Unchecked)
+				-Eg: ClassCastException, NullPointerException
+			Check Exception
+				Required by the compiler to anticipate a checked exception and check for it.
+			Unchecked Exception
+				Should be coded around rather than handled.
+
+	Custom Exceptions:
+		Write a class that extends Exception, then have something throw it.
+
+	Handling Exceptions
+		Try/Catch/Finally
+			-Finally block will always execute even if an exception is not thrown
+			-For compilation you need: Try and either Catch or Finally
+		Re-throw the exception
+			public void doSomething() Throws Exception {}
+
+Generics
+	-Taking type as a parameter
+	-Allows you to write code that can handle many different types of objects
+	-Ensures type safety while adding stability and re-usability
+	-Denoted with angle brackets (<>) and uses a placeholder instead of a specific type
+	Eg: public <T> T someMethod (T t) {}
+
+Reflections
+	-Often work in conjunction with Generics
+	-A set of tools that allow runtime inspection and manipulation of an object
+	-Can access fields, methods, constructors, and even private members  (Which breaks Encapsulation)
+
+
+Task For 1:00:
+	Write a method that will take a list of generic objects (ArrayList<T>) and filter through the list
+	-If anything in the list is of type Car add it to a new list and then return that list
+	-InstanceOf method or GetClass
+
+Comparison
+	== or .equals() or .hashcode()
+	Objects of the same class with the same .hashcode() result should also be equal according to .equals()
+
+	Operators
+		& && "and" as well as | || "or"
+		& | - Bitwise operators
+		&& || - Short-Circuit operators
+		Short-Circuit: Will only evaluate as far as needed.
+			-IE for A && B if A is false it will not evaluate B since it does not effect the outcome
+
+	Comparison of Objects
+		Reference types need a "Natural Ordering" to be sorted
+
+		Class implements Comparable interface
+			-Must define compareTo()
+
+		Class implements Comparator interface
+			-Must define Compare()
+
+Collections Framework
+	Iterable
+		Collection
+			Set: Unique Data set (No duplicates)
+				Sorted Set: Unique Ordered Data Set
+					HashSet (Class):
+					LinkedHashSet (Class):
+					TreeSet (Class):
+			Queue: FIFO data
+				PriorityQueue (Class):
+				LinkedList (Class):  
+			List: A linked set of data
+				ArrayList (Class):
+				Vector (Class):
+				LinkedList (Class):
+
+		Map
+			HashMap (Class):
+			HashTable (Class):
+			SortedMap
+				TreeMap (Class):
+
+	Collections
+		-Utility class with useful methods like Sort
+
+	Iterable
+		-Every Iterable has an iterator
+
+Final Vs Finalize vs Finally
+	Final
+		Applied to a variable: Cannot change value of variable after assignment
+		Applied to a class: Cannot extend the class
+		Applied to a method: Method cannot be overridden
+
+	Finalize
+		Object method that is used to define behavior when an object is garbage collected
+
+	Finally
+		Used in a try/catch block as a chunk of code that is always executed
+
+Threads
+	-Paths of executions within a process
+	-Many threads in one process (program)
+	-Thread has its own call stack, shares memory with other threads
+
+	Upon starting a Java program three threads kickoff
+		-Garbage Collector (Daemon Thread): 
+		-Thread Scheduler (Daemon Thread): Organizes threads
+		-Main Thread: Thread from the main method of a program
+
+	Starting a Thread
+		-Extend Thread
+			public class MyThread extends Thread {
+				@Override
+				void run() {
+					//Stuff
+					//Start me with .start
+				}
+			}
+
+		-Implement Runnable
+			public class MyRunnable implements Runnable {
+				@Override
+				void run() {
+					//Stuff
+					//To Run:
+					new Thread();
+					//then
+					Thread.start();
+				}
+			}
+			-This allows for you to think of the class as the job with the thread as the worker
+			-Decouple job from worker
+
+
+
+
+******************** Tuesday August 7th ********************
+
+Databases
+	A database is a collection of tables of entities for storing data
+
+Non-Relational Databases (NoSQL) 
+	-Document based
+	-Optimizing efficient querying over efficient storage
+	-MongoDB, DynamoDB, etc.
+
+Relational Databases
+	-Tables are related by keys to maintain "Referential Integrity"
+	-OracleDB, Microsoft SQLServer, MySQL, SQLite
+	-We communicate with databases using SQL: Structured Query Language
+	-PLSQL: Procedural Language SQL - Oracle DB
+	-TSQL: Transact SQL - MsSQL
+	-RDBMS: Relational Database Management System (SQLDeveloper)
+
+Databasics
+	-Need to specify:
+		-Column names and data types
+		-Primary Key
+			Natural Key: A primary key created from data already present within the table
+			Surrogate Key: A primary key added on purely for a unique identifier
+			Composite Key: Made of more than one column, and often used to express many-many relationships
+
+	Normalization:
+		Process of organizing information into tables to reduce redundancy and ensure referential integrity
+		Normal Forms:
+			6 Levels, but the 3rd form is adequate for most purposes
+			1st Normal Form:
+				-Database tables, Rows & Columns, Primary Key uniquely identifying each row
+				-Columns contain Atomic values (Cannot be further subdivided)
+				-No repeating groups of columns
+			2nd Normal Form:
+				-Already be in 1st normal form
+				-All non key calls are dependent on the primary key
+					IE: For each column does it describe what the primary key identifies?
+				-Eliminate partial dependencies
+			3rd Normal Form:
+				-Already in 1st and 2nd normal form
+				-Transitive Dependencies
+					Reliance on PK through another column
+
+SQL
+	Structured Query Language
+
+	Sub-languages
+		DDL: Data Definition Language
+		For the structure of a database:
+			Create - Use to create any structural components (Tables, constraints, schema, )
+			Alter - Use to change a database structural component
+			Truncate - Use to delete contents of a table but not the table itself (Can't undo)
+			Drop - Remove the structure completely
+
+		DML: Data Manipulation Language
+		For working with actual data entries
+			Insert - Add new rows of data
+			Update - Update already existing rows of data
+			Delete - Delete individual rows of data (Can be rolled back)
+
+			Select - For retrieving data via a results set
+				-Can be considered a subset of DML, DQL: Data Query Language
+
+		DCL: Data Control Language
+			-Language used to control access to data
+			Grant
+			Revoke
+
+		TCL: Transaction Control Language
+			Transaction: Any unit of work done on a database
+			Commit - Used to permanently save any transaction into the database
+			Rollback - Undo actions
+			Savepoint - Used to temporarily save a transaction so that you can rollback to that point whenever required.
+
+DAO
+	Design Pattern
+	Uncouple your logic from interacting with your database
+
+	DAO: Data Access Object
+		-An interface
+		-Methods that you want to be able to perform on your database
+
+	Implementations of your DAO
+		-This will have the actual JDBC code
+		-CRUD operations (Create, Read, Update, Delete)
+
+
+
+
+******************** Wednesday August 8th ********************
+
+SQL Selects
+	SELECT [Column List or *]
+	FROM [Table List]
+	WHERE [Condition]
+	GROUP BY - Without having gives distinct values of specified columns
+	HAVING
+	ORDER BY [Column List]
+
+Joins
+	Two types:
+		Inner:
+			-Join between two tables on shared data (EX Foreign Keys)
+
+		Outer:
+			Left Outer Join
+				-All of left table + shared data from right
+
+			Right Outer Join
+				-Flip Flopped
+			
+			Full Outer Join
+				-Everything
+
+			Self Join
+			Cross Join
+
+Set Operations
+	For comparing result sets with the same structure
+
+	Union
+		Returns everything from both sets with no duplicates
+
+	Union All
+		Returns everything, but with duplicates
+
+	Intersect
+		Returns only entries common to both sets
+
+	Minus
+		Returns only unique entries of one set
+
+Sub-queries
+	Queries within the where clause of other queries used to further refine a result set
+	Two types:
+		Non-Correlated
+			Where the inner query can be executed independent of the outer query
+
+		Correlated
+			Where the inner query cannot be executed independently
+
+Constraints
+	Primary Key
+	Foreign Key
+	Unique
+	Check: Logical Checks for a column
+	NotNull
+
+Other Constructs
+	Views
+		-Virtual tables returned by a query
+		-Pre-compiled select statement
+
+	Functions
+		-A block of code that you can execute
+		-0 or many parameters
+		-Return 1 value
+		-Can't change data (Not DML, only DQL)
+
+	Stored Procedure
+		-Also a block of code that you can execute
+		-0 or many in parameters
+		-0 or many out parameters (Returns)
+		-Access to full DML and TCL
+			Insert Update Delete Commit Rollback Savepoint
+
+
+
+
+******************** Thursday August 9th ********************
+Cursors
+	Oracle creates a "context area" with all info necessary for processing a SQL statement
+	"Cursor" is a pointer to the Context Area
+	"Active Set" is the rows returned by a statement and is held by the cursor
+	Implicit Cursor - Created behind the scenes with most DML language
+		No control over these
+	Explicit Cursor - Programmer or system defined 
+		Gives more control over context area
+		-Declare it to initialize it in memory
+		-Open it to allocate some memory to it
+		-Fetch the content 
+		-Close it (Release the memory)
+
+Indexes
+	Applied to a column to force a physical in memory ordering of rows
+		This is done to speed up searching
+		But this will slow down insertions and updates
+	Unique, FK, PK Constraints
+		Create 'backing' indices
+		This means that you cannot put additional user indices on these columns
+			CREATE INDEX [NAME]
+			ON [TABLE][COLUMN] ASC|DESC
+
+Transactions
+	Unit of work on a database
+	TCL - Transaction Control Language
+		Commit
+		Rollback
+		Savepoint
+	A good transaction will follow ACID:
+		Atomicity: All or nothing - Either the entire transaction executes or non of it does
+		Consistency: DB is in a valid state according to your pre-existing structure and constraints after the commit
+		Isolation: System state during concurrent transactions should look like the transactions were sequential
+		Durability: Once changes are committed they cannot be rolled back. All commits are final.
+
+	Dirty Read: When a transaction reads uncommitted data from another transaction
+		-What happens when that first transaction fails and rolls back
+	Non-repeatable Read: When another transaction changes the data set of the current transaction while it's in progress
+		-TX A works on a set, TX B changes the set & commits, TX A may fail due to changes
+	Phantom Read: Addition of data to original query that is unexpected. Doesn't cause a failure, but may cause unintended results
+		-TX A queries, TX B then inserts data matching TX A's query, TX A then re-queries and retrieves additional phantom data
+
+
+				Dirty Read 		Non-Repeatable Read 		Phantom Read
+	Read 
+	Uncommitted 	Yes					Yes						Yes
+
+	Read 
+	Committed 		No 					Yes 					No
+
+	Repeatable
+	Read 			No 					No 						Yes
+
+	Serializable 	No 					No 						No
+
+
+DAO
+	Pattern to abstract away our data access code 
+	BearDAO (I) implemented by BearDaoImp
+		-If database implementation is changed simply make a new implementation of the Interface.
+
+JDBC: Java Database Connectivity
+	Package: java.sql
+		SQLException - Common type of checked exception
+
+	Important Interfaces
+		Connection
+			Represents a session with a specific database
+			SQL statements are executed and our results are returned within the context of a Connection
+			getMetaData(): Use to get information about the DB
+			Use connection methods to do any configuration.
+			Autocommit is on by default
+
+Other Interfaces
+	Statement
+		Execute a string input as a SQL Query
+		Never use this - SQL Injection and all those goodies
+
+	Prepared Statement
+		A statement which represents a precompiled SQL statement
+		Use this to efficiently execute a statement multiple times
+
+		PreparedStatement pstmt = con.prepareStatement(
+			"UPDATE EMPLOYEE
+			SET SALARY = ?
+			WHERE EID = ?");
+		pstmt.setBigDecimal(1, 81,355);
+		pstmt.setInt(2, 50);
+
+	CallableStatement
+		Extends PreparedStatement
+		Used to execute Stored Procedures
+
+	ResultSet
+		A table of data representing database results
+		Maintains a cursor pointing to the first row
+		Cursor has a .next() method
+
+
+
+
+******************** Tuesday August 14th ********************
+
+HTML: Hyper Text Markup Language
+	Standard means of structuring pages to render in a browser
+	HTML5
+	Nested tags to represent elements
+	<!DOCTYPE HTML>
+	<html>
+		<head>
+			Meta data goes here (Title, charset, encoding, external scripts...)
+		</head>
+		<body>
+			All the pretty stuff
+		</body>
+	</html>
+
+CSS: Cascading Style Sheet
+
+
+
+
+******************** Wednesday August 15th ********************
+
+Java script
+	ES (ECMA Script) 6 - Not supported everywhere yet
+	Syntactically is a C language
+		Can expect variable declarations and assignments, looping, control statements, etc...
+	Interpreted not compiled
+	Loosely typed
+	First mainstream Lambda based language
+		Functions are values
+		Get a lot of callback functions (Passing functionality as code)
+		Anonymous Functions (Functions without identifiers)
+	If we're using JS for client side logic, include link to .js file in <script></script> element
+
+Objects
+	Objects are containers of property value pairs
+	Objects inherit directly from other objects
+	Every object has __proto__ property which is its parent
+
+
+Primitives
+	Numbers: 64 bit floating point
+	Strings: No string pool or character type
+		Single or double quotes ('' || "")
+		.length to find length
+
+Booleans
+	true, false
+	"Truthy"		"Falsy"
+
+	true 			false
+	Anything 		0
+	NOT FALSY 		""
+					NULL
+					Undefined
+					NaN
+
+Type Coercion
+	7+7+7 = 21
+	7+7+'7' = '147'
+	7+'7'+7 = '777'
+
+	true == 1 evaluates to true
+	use === and !== to prevent type coercion in conditionals
+
+Guard & Default operators
+	Guard: &&
+		Still an AND
+		both values must be truthy
+
+	Default: ||
+		Still an OR
+		A || B
+		If A evaluates to falsy then B is returned
+
+Variable Scopes (JS)
+	Function Scope: Defined within a function
+		Keyword: var
+		Accessible only within that function
+
+	Global Scope: 
+		Defined for your run time's global object (Browser: Window)
+		Accessible anywhere
+		Unless in strict mode these can be implicitly created by forgetting Keyword: var
+		Can lead to shadowing (Multiple vars of same name with different scopes)
+			JavaScript uses the one that was most recently declared
+
+SDLC: Software Development Life Cycle
+	Big Bang
+		Everything all at once
+		No formal structure
+		Okay for very small projects
+		High management overhead
+		Typically not desirable
+
+	Waterfall
+		Working with very well defined requirements that don't change
+		Low Management overhead
+		Good for large projects with well-defined end
+
+	Iterative
+		Add new modular requirements with each iteration
+		Can become complex to test as more features are added
+		Certain amount of management overhead to figure out if the new things are breaking the old things
+
+	AGILE
+		Implements Iterative Development and then ramps them up
+		Accredited to Martin Fowler who wrote the AGILE manifesto
+		Break business requirements into small modular pieces --> User Stories
+			Good User Stories are related to the user's role in the system
+			Are also as modular as possible
+		Accountable to a project owner
+		Track Stories through stages
+
+		Scrum (Implementation of Agile)
+			Work is broken up into fast iterations called sprints
+			Take that time to act upon a specific set of user stories
+			Finish with Sprint Retrospective
+			Keep track of progress on a burn down chart
+			Scrum Master to keep track of everything
+			Daily Stand-up: A very short daily check-in meeting where everyone shares their progress and any blocks 	they've run into
+
+		KanBan (Also an Implementation of Agile)
+			Similar to Scrum, but generally for longer running projects with different sub-projects within
+				Different parts moving at different speeds
+
+
+
+
+******************** Thursday August 16th ********************
+
+Closures
+	How we mimic encapsulation in JavaScript
+	How to allow controlled access to the internal state of a function
+
+	var add = (function() {
+		var count = 0;
+		return function() {
+			count += 1;
+			return count;
+		};
+	})();
+
+JSON: JavaScript Object Notation
+	Credited to Douglas Crockford
+	Language-Agnostic way to represent information
+		(Like XML, CSV, YML, etc...)
+	Inspired by how JavaScript represents objects
+	Key:Value pairs
+
+DOM: Document Object Model
+	Tree of JS objects representing html elements used to render the view
+
+	Selection & Manipulation
+		Using JS to change what is displayed
+		Use document object to find all elements
+			use class, id, or tag
+
+	Interacting with elements
+		[element].innerHTML.[attribute].setAttribuet([attribute], [value]).style
+		Can interact with Page dynamically after it loads
+			Client-Side Rendering
+
+	Events
+		Some occurrence in our client side environment to which we can respond programatically
+
+		Input Events
+			OnChange, onFocus, onKeyDown, etc...
+
+		Mouse & Click Events
+			OnMouseMove, onMouseOver, onMouseEnter, onClick, onDoubleClick, etc...
+
+		Load Events (Dealing With the Page Itself)
+			OnLoad, onRefresh, onRestore
+
+		Event Object: A JS object representing the most recent event to fire
+			Very dynamic due to the large number of events that can happen and there's only 1
+
+		Event Listeners
+			In-line: <button onclick="someFunc()">Click Me</button>
+				Obtrusive JavaScript: Coupling Structure & Behavior
+
+			Method: [element].onClick = function(){...};
+				Unobtrusive JavaScript
+
+			Long: [element].addEventListener(onClick, handler, userCapture);
+
+			When clicking on an element either Bubble or Capture
+				Bubble: Moving from Target --> Root
+				Capture: Moving from Root --> Target
+
+
+
+
+******************** Thursday August 16th ********************
+
+HTTP(S): HyperText Transfer Protocol (Secured)
+	General means of communication for the world wide web
+
+HTTP Methods (Verbs)
+	GET: Generally used to retrieve data
+		Send parameters in the URL (Either by routing or by query string)
+		Nothing in request body
+		Not great for sensitive information
+		Also limited to URL length
+	POST: Typically used to send information in a request body (No size limit)
+		Better for sensitive information, E.G. logins
+	PUT
+	DELETE
+	TRACE
+	OPTIONS
+	HEAD
+	PATCH
+
+What's Inside
+
+	HTTP Request
+		Header: Meta-data like IP address, UA, etc...
+		Body: Data being sent (Nothing for a GET)
+		HTTP Version
+		HTTP Method
+		URL
+
+	HTTP Response
+		Header
+		Body
+		HTTP Version
+		Status Code: From 100-599
+			100-199: Informational, request received continuing
+			200-299: Success
+			300-399: Redirect, further action required
+			400-499: Client Error, request contained bad syntax or cannot be filled
+			500-599: Server Error, server failed to fill a valid request
+
+AJAX: Asynchronous JavaScript and XML
+	Not a programming language 
+	A set of interactions between DOM and XMLHTTPRequest object obtained from browser
+	Asynchronous because the requests don't need to wait for each other.
+	Different parts of page can load/update independently 
+
+Ajax Request Workflow:
+	Obtain XHR
+	Define onReadyStateChange
+	prepare the request (open)
+	then send()
+
+XHR: XML HTTP Request
+	IE 5 & 6 don't support
+	Otherwise, get XHR from window
+
+	Methods:
+		Constructor
+		Abort: Cancel current request
+		GetResponseHeader
+		GetAllResponseHeaders
+		Open(Verb, URL, asynch, username, password)
+			Verb: HTTP Method
+			URL: Where request is going
+			Asynch: Whether request should be executed asynchronously or not (True by default)
+			Username/Password: Optional credentials (Not needed, but can be used as some endpoints require login)
+
+			Use for setting up the request
+		Send(content)
+			Content: Option, goes into Request Body (POST)
+
+	Important Properties:
+		readyState: 0-4, how we define the status of our request
+			0: Request not initialized
+			1: Connection established to the server
+			2: Request has been received
+			3: Request is being processed
+			4: Response is ready
+		onReadyStateChange: Assign a function which is executed when the readyState changes
+		responseXML
+		status
+		statusText 
+
+POST
+	For creation accept as a "child" at that resource
+	Not IdemPotent
+		N Requests --> N version of resource
+
+PUT
+	For updating an existing resource living at that location
+	IdemPotent: Multiple identical requests will produce the same result as if there were a single modification
+
+PATCH
+	For a partial update at that location
+	Not supported by all servers
+
+Weird.js
+	Type Coercion
+	Implicit Globals
+	Hoisting
+
+	Semicolon Injection:
+		var a = function() {
+			//stuff
+		} <-- Will put a semicolon here
+
+		var a = function() <-- will inject a semicolon here BREAKS
+		{
+			//stuff
+		}
+
+
+	Use Strict: 
+		This will prevent type coercion
+		Will break if let/var is not used rather than creating implicit globals
+		
+
+
+
+******************** Tuesday August 21st ********************
+
+Servlets!
+	A java class that can handle HTTP requests
+	Servlet API: javax.servlet & javax.http
+	Hierarchy: Servlet (Interface) --> GenericServlet (Abstract Class) --> HTTPServlet (Abstract) --> Your Servlet
+	Web.XML --> Deployment Descriptor
+		Provides mapping between incoming requests and available resources
+
+	Servlet Life Cycle
+		1) Client sends a request
+		2) Server receives request and generates ServletRequest and ServletResponse
+		3) Container consults Deployment Descriptor (DD) to find if there is a matching resource
+		4) Container instantiates desired servlet if no previously existing instance
+		5) If servlet was just instantiated, container calls init() method
+			This sets additional parameters specified in DD.
+		6) Server calls the service() method which invokes request handlers (doGet, doPost, etc...)
+		7) Servlet's request handlers process request and return a response
+		8) Successive request for the same servlet cause the container to call service()
+		9) If container is shutting down or attempting to release memory:
+			Call destroy() --> Final life-cycle method after init() and service()
+
+	Deployment Descriptors
+		General configuration file for servlet applications
+		Servlet Mappings: Associating URL patterns with servlets
+
+		// Register the servlets
+		<servlet>
+			<servlet-name>ServletA</servlet-name>
+			<servlet-class>com.example.servlet.ServletA</servlet-class>
+		</servlet>
+
+		// Map the servlet
+		<servlet-mapping>
+			<servlet-name>ServletA</servlet-name>
+			<url-pattern>/a</url-pattern>
+		</servlet-mapping>
+
+		Service Method
+			Public from GenericServlet
+				public void service(ServletRequest req, ServletResponse resp)
+			Protected from HTTPServlet 
+				protected void service(HTTPServletRequest req, HTTPServletResponse resp)
+
+		Handler Methods
+			protected void doGet(HTTPServletRequest req, HTTPServletResponse resp) throws CheckedException, ServletException, IOException
+
+			protected void doPost(HTTPServletRequest req, HTTPServletResponse resp) throws CheckedException, ServletException, IOException
+
+			Default implementations of these give bad requests
+
+	PrintWriter
+		Obtained from the response object
+		Writes to the body of the HTTP response
+		Appends with every write() or println()
+
+	ServletConfig (Configuration for a Single Servlet) + 
+	ServletContext (Configuration for ALL Servlets registered w/ Web Application)	
+		For providing Servlets with any additional parameters
+		Values are provided to servlets in init()
+
+
+	Redirect
+		1) Client sends request for /a
+		2) D.D. maps /a to ServletA's doGet which returns a response which redirects to /b
+		3) Return status code of 300-399 with instructions to send a fresh request to /b
+		4) Client sends request to /b
+
+		Get a fresh request/response pair with the second request
+		URL changes for the client
+		response.sendRedirect 
+
+	Forward
+		1) Client sends a request for /a
+		2) DD maps /a to ServletA which has instructions to forward the request to /b
+		3) A passes the same r/r objects to /b which processes the request
+
+		The client sees no URL change
+		Stay within the scope of the same request
+		Use RequestDispatcher to do this
+
+
+
+
+******************** Wednesday August 22nd ********************
+
+Session Management
+	How we can verify and authenticate users
+	Retain information outside the scope of a single request and response cycle
+
+	Browser Session: One continuous set of interactions with the browser
+		Not exactly what "session management" means
+
+	Options
+		Cookies: Small pieces of information stored within the browser
+			Managed client-side
+			Persistent: Should persist across multiple browser sessions
+			and Non-Persistent cookies: Should remain for only a single browser session
+			javax.servlet.http.Cookie;
+
+			Pros: Simple and maintained on client-side
+
+			Cons: Text-only and can be disabled (Also shady)
+
+		URL Rewriting: Appending an identifier to a URL
+
+			Pros: Works when cookies are disabled
+
+			Cons: Only works when navigating through links
+
+		Hidden Form Fields: Exactly what it sounds like...
+
+			Pros: Simple and doesn't rely on the browser
+
+			Cons: Shows up in the source code and requires server side maintenance
+				Can only authenticate with form submission
+
+
+		Java gives us HTTPSession!
+			Use request objects to obtain a session and manage it programatically on the server side
+
+			.getSession(boolean);
+				boolean: If true creates new session object without checking
+				default is for it to be false which checks for an existing session and returns that one
+				Container creates JSessionID cookie, appends to url if cookies are disabled
+
+			.invalidate()
+				End session
+
+
+
+
+******************** Thursday August 23rd ********************
+
+Node.js
+	A JavaScript runtime that provides an environment to execute JavaScript code
+	(Libraries needed during execution)
+	Uses the same V8 engine as Chrome
+		Engine is responsible for parsing & JIT (Just In Time) compilation
+
+	NPM: Node Package Manager
+		Manages >1/2 Million Packages:
+			Folders containing projects described by a package.json file
+			Free! Can be installed with npm command
+
+		Package.json:
+			Lists packages project depends on
+			Specifies project & dependency versions
+			Build becomes reproducible to other developers
+
+TypeScript
+	JavaScript superset
+	Developed by a Microsoft team
+	Enhances typing (of data) and object orientation
+	Not fully supported by all browsers:
+		To get around this we Transpile:
+			Source --> Source compilation
+			TypeScript can be transpiled into ES3+
+
+	Strongly Typed
+	Class definition files
+		Abstract classes, Interfaces, Generics, Static Content
+	Function definition include return types
+
+	Data Types:
+		Boolean, Number, String, Null, Undefined
+		Hex and Octal are supported (let hex: number = 0x17d4, o for octal, b for binary)
+		Template Strings (from ES6): `hello, my name is ${fullname}`;
+		Arrays: let list:number[] = [1, 2 ,3]; let list2:Array<number> = [1, 2, 3];
+		tuple
+		enum
+		any --> Opt out of type checking
+		void --> For functions which return nothing, variables with type void can be null or undefined
+		Never --> For values that should never occur; Eg infinite loops or functions which throw an error
+
+	Access Modifiers:
+		Public
+		Private - Within a class
+		Protected - Access through inheritance only
+		Implicitly Public with no Modifier
+
+	Let (ES6)
+		Block Scope
+
+	Const (ES6)
+		Value cannot be reassigned
+
+	Read Only
+		Can be put on the property of an object to prevent that property from being changed.
+
+	Classes:
+		class Greeter {
+			message: String;
+			Constructor(message:String) {
+				this.message = message;
+			}
+
+			greet() {
+			 	return "hello" + message;
+			}
+		}
+
+		Interfaces: used for type-checking
+			Structural Sub-typing
+			Define a 'shape' for a particular kind of object
+			
+Angular
+	No AngularJS --> That was ~1.6
+	Versions 2, 4, 5, 6 (4 is Industry Standard)
+
+	module (TypeScript):
+		Problem with name spaces in JS
+		ES6+ Addresses this with modules
+		Module <--> File
+		We don't need to define or create modules, we jut write code within different files.
+
+		file: product.ts
+		export class Product {
+			name: String;
+			price: Number;
+
+			Constructor(name:String, price:Number) {
+				this.name = name;
+				this.price = price;
+			}
+		}
+
+		file: order.ts
+			import {Product} from './product';
+
+	module (Angular):
+		Organize an application into cohesive blocks of functionality
+		Every application >= 1 module
+
+		Components, which belong exclusively to it.
+
+	Components:
+		Independent reusable areas of page (Nav Bar, Panels, etc...)
+		Pieces:
+			Template: Defines the html for the UI fragment
+			Class: Defines the logic, view state, and behavior governing the fragment (.ts file)
+			Styling: CSS
+			Meta-data: Applied to class using @component decorator
+		Need to include components in module specification
+
+	@NGModule
+		app.module.ts: Defines the root module of the app
+
+	Directive: A custom html element/attribute used to extend html features
+
+	 

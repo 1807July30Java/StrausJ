@@ -9,26 +9,6 @@ function sendAjaxGet(url, func) {
     xhr.send();
 }
 
-function populateEmployees(xhr) {
-    if (xhr.responseText) {
-        var res = JSON.parse(xhr.responseText);
-        for (var i = 0; i < res.length; i++) {
-            var table = document.getElementById("employeeTable");
-            var row = document.createElement("tr");
-            table.appendChild(row);
-            var firstName = document.createElement("td");
-            firstName.innerText = res[i].firstName;
-            var lastName = document.createElement("td");
-            lastName.innerText = res[i].lastName;
-            var userName = document.createElement("td");
-            userName.innerText = res[i].username;
-            var email = document.createElement("td");
-            email.innerText = res[i].email;
-            row.append(firstName, lastName, userName, email);
-        }
-    }
-}
-
 function populateRequests(xhr) {
     if (xhr.responseText) {
         var res = JSON.parse(xhr.responseText);
@@ -61,6 +41,5 @@ function populateRequests(xhr) {
 }
 
 window.onload = function () {
-    sendAjaxGet("http://localhost:8084/data?entity=employee&get=managed", populateEmployees);
     sendAjaxGet("http://localhost:8084/data?entity=request&get=all", populateRequests)
 };

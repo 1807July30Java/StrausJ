@@ -25,6 +25,9 @@ public class DispatcherUtil {
                 } else if (get.matches("-?\\d+(\\.\\d+)?")) {
                     Employee e = ed.getEmployeeByID(Integer.parseInt(get));
                     return od.writeValueAsString(e);
+                } else if (get.equals("current")) {
+                    Employee e = ed.getEmployeeByUName(username);
+                    return od.writeValueAsString(e);
                 }
             } else if (type.equals("request")) {
                 switch (get) {

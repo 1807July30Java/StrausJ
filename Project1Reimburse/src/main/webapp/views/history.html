@@ -18,10 +18,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/requestManage">Approve Requests</a>
+                    </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/profile">Profile
+                        <a class="nav-link" href="/history">Request History
                             <span class="sr-only">(current)</span>
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/newEmployee">New Employee</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/newRequest">New Request</a>
@@ -45,102 +54,63 @@
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- Tabs Example -->
         <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-10 mx-auto">
+                        <div class="card card-signin">
+                            <div class="card-body">
+                                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                <!-- Tab Nav -->
+                                <ul class="nav nav-tabs" role="tablist">
 
-            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-            <!-- Tab Nav -->
-            <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#approved" role="tab" data-toggle="tab">
+                                            Approved Requests
+                                        </a>
+                                    </li>
 
-                <li role="presentation" class="active">
-                    <a href="#may" role="tab" data-toggle="tab">
-                        May {{ current_year }} Graduates
-                    </a>
-                </li>
+                                    <li role="presentation">
+                                        <a href="#denied" role="tab" data-toggle="tab">
+                                            Denied Requests
+                                        </a>
+                                    </li>
 
-                <li role="presentation">
-                    <a href="#august" role="tab" data-toggle="tab">
-                        August {{ current_year }} Graduates
-                    </a>
-                </li>
+                                </ul>
+                                <!--^^ Tab Nav -->
 
-                <li role="presentation">
-                    <a href="#december" role="tab" data-toggle="tab">
-                        December {{ current_year }} Graduates
-                    </a>
-                </li>
+                                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                <!-- Tab Content -->
+                                <div class="tab-content borders">
 
-            </ul>
-            <!--^^ Tab Nav -->
+                                    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                    <!-- Approved Requests panel content -->
+                                    <div role="tabpanel" class="tab-pane" id="approved">
 
-            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-            <!-- Tab Content -->
-            <div class="tab-content borders">
+                                        <h5 class="card-title">Requests</h5>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Date Submitted</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">User</th>
+                                                    <th scope="col">Manager</th>
+                                                    <th scope="col">Receipt</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="approvedTable"></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-center"><a href="/newRequest">Add a New Request</a></div>
+                                    </div>
 
-                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-                <!-- August Graduates panel content -->
-                <div role="tabpanel" class="tab-pane" id="august">
 
-                    <h2>August {{ current_year }} Graduates:</h2>
-                    <h3 class="text-center"><button class="complete btn-icBlue" id=8>Remove Complete Grads</button></h3>
-                    <br>
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Student ID</th>
-                            <th>Major</th>
-                            <th># Items Out</th>
-                        </tr>
-                        </thead>
-                        {% for item in aug_grads %}
-                        <tr>
-                            <td><a href="{{ url_for('account_detail', a_id=item[0].account_id) }}">{{ get_super(item[0].account_id).name }}</a></td>
-                            <td>{{ item[0].borrow_id }}</td>
-                            <td>{{ item[0].major }}</td>
-                            <td>{{ get_super(item[0].account_id).accountSignout_assoc|length }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
+                                    <!--^^December Graduates panel content -->
 
-                </div>
-                <!--^^August Graduates panel content -->
-
-                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-                <!-- December Graduates panel content -->
-                <div role="tabpanel" class="tab-pane" id="december">
-
-                    <h2>December {{ current_year }} Graduates:</h2>
-                    <h3 class="text-center"><button class="complete btn-icBlue" id=12>Remove Complete Grads</button></h3>
-                    <br>
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Student ID</th>
-                            <th>Major</th>
-                            <th># Items Out</th>
-                        </tr>
-                        </thead>
-                        {% for item in dec_grads %}
-                        <tr>
-                            <td><a href="{{ url_for('account_detail', a_id=item[0].account_id) }}">{{ get_super(item[0].account_id).name }}</a></td>
-                            <td>{{ item[0].borrow_id }}</td>
-                            <td>{{ item[0].major }}</td>
-                            <td>{{ get_super(item[0].account_id).accountSignout_assoc|length }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-
-                </div>
-                <!--^^December Graduates panel content -->
-
-                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-                <!-- Denied panel content -->
-                <div role="tabpanel" class="tab-pane active" id="denied">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-10 mx-auto">
-                                <div class="card card-signin">
-                                    <div class="card-body">
+                                    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                    <!-- Denied panel content -->
+                                    <div role="tabpanel" class="tab-pane active" id="denied">
                                         <h5 class="card-title">Requests</h5>
                                         <div class="table-responsive">
                                             <table class="table">
@@ -163,48 +133,46 @@
                         </div>
                     </div>
                 </div>
-                <!--^^May Graduates panel content -->
-
             </div>
-            <!--^^tab content -->
+            <!--^^May Graduates panel content -->
 
         </div>
-        <!--^^tabs -->
+        <!--^^tab content -->
 
     </div>
-    <!--^^container -->
+    <!--^^tabs -->
 
     <br>
 
 </section>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-10 mx-auto">
-            <div class="card card-signin">
-                <div class="card-body">
-                    <h5 class="card-title">Requests</h5>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Date Submitted</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">User</th>
-                                <th scope="col">Manager</th>
-                                <th scope="col">Receipt</th>
-                            </tr>
-                            </thead>
-                            <tbody id="requestTable"></tbody>
-                        </table>
-                    </div>
-                    <div class="text-center"><a href="/newRequest">Add a New Request</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="container">-->
+<!--<div class="row">-->
+<!--<div class="col-sm-10 mx-auto">-->
+<!--<div class="card card-signin">-->
+<!--<div class="card-body">-->
+<!--<h5 class="card-title">Requests</h5>-->
+<!--<div class="table-responsive">-->
+<!--<table class="table">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th scope="col">Date Submitted</th>-->
+<!--<th scope="col">Amount</th>-->
+<!--<th scope="col">Status</th>-->
+<!--<th scope="col">User</th>-->
+<!--<th scope="col">Manager</th>-->
+<!--<th scope="col">Receipt</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody id="requestTable"></tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--<div class="text-center"><a href="/newRequest">Add a New Request</a></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 </body>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"

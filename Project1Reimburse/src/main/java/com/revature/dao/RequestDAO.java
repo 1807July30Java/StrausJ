@@ -14,6 +14,8 @@ public interface RequestDAO {
 
     List<Request> getAllEmployeeRequest(int employeeID);
 
+    List<Request> getAllByCode(int statusCode);
+
     boolean addRequestWithReceipt(Request r, InputStream blob);
 
     boolean addReceipt(int requestID, InputStream blob);

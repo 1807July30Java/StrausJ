@@ -28,6 +28,8 @@ public class DispatcherUtil {
                 } else if (get.equals("current")) {
                     Employee e = ed.getEmployeeByUName(username);
                     return od.writeValueAsString(e);
+                } else if (get.equals("managers")) {
+                    return od.writeValueAsString(ed.getManagers());
                 }
             } else if (type.equals("request")) {
                 switch (get) {
@@ -42,6 +44,12 @@ public class DispatcherUtil {
                     case "managed": {
                         Employee e = ed.getEmployeeByUName(username);
                         return od.writeValueAsString(rd.getAllManagerRequest(e.getEmployeeId(), 1));
+                    }
+                    case "allApproved": {
+                        return od.writeValueAsString(rd.getAllByCode(2));
+                    }
+                    case "allDenied": {
+                        return od.writeValueAsString(rd.getAllByCode(0));
                     }
                 }
             }
@@ -61,5 +69,13 @@ public class DispatcherUtil {
 
     public void addRequest(Request r, InputStream fs) {
         rd.addRequestWithReceipt(r, fs);
+    }
+
+    public void updateUser(Employee e) {
+        ed.updateEmployee(e);
+    }
+
+    public void addEmployee(Employee e) {
+        ed.addEmployee(e);
     }
 }

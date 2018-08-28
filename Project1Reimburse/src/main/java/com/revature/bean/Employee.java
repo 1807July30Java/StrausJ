@@ -23,6 +23,16 @@ public class Employee {
         this.isManager = isManager;
     }
 
+    public Employee(String firstName, String lastName, String username, int password, String email, int managedBy, boolean isManager) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.managedBy = managedBy;
+        this.isManager = isManager;
+    }
+
     public Employee(int employeeId, String firstName, String lastName, String username, String password, String email, int managedBy, boolean isManager) {
         this.employeeId = employeeId;
         this.firstName = firstName;
@@ -41,6 +51,14 @@ public class Employee {
         this.username = username;
         this.email = email;
         this.isManager = isManager;
+    }
+
+    public Employee(int employeeId, String firstName, String lastName, String username, String email) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
     }
 
     public int getEmployeeId() {

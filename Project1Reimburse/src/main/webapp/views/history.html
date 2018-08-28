@@ -3,15 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Receipt</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="receipt-img img-responsive" src="" id="modal-image">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Reimburse</a>
+            <a class="navbar-brand" href="/profile">Reimburse</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -36,6 +53,9 @@
                         <a class="nav-link" href="/newRequest">New Request</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/edit">Edit Account</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
@@ -47,136 +67,108 @@
 <section>
 
     <!-- Content Container -->
-    <div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mx-auto">
+                <div class="card card-signin">
+                    <div class="card-body">
 
-        <br>
+                        <br>
 
-        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <!-- Tabs Example -->
-        <div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-10 mx-auto">
-                        <div class="card card-signin">
-                            <div class="card-body">
+                        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                        <!-- Tabs Example -->
+                        <div>
+
+                            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                            <!-- Tab Nav -->
+                            <ul class="nav nav-tabs" role="tablist">
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#approved" role="tab">
+                                        Approved Requests
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#denied" role="tab">
+                                        Denied Requests
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <!--^^ Tab Nav -->
+
+                            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                            <!-- Tab Content -->
+                            <div class="tab-content borders">
+
                                 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-                                <!-- Tab Nav -->
-                                <ul class="nav nav-tabs" role="tablist">
+                                <!-- August Graduates panel content -->
+                                <div role="tabpanel" class="tab-pane active" id="approved">
 
-                                    <li role="presentation" class="active">
-                                        <a href="#approved" role="tab" data-toggle="tab">
-                                            Approved Requests
-                                        </a>
-                                    </li>
-
-                                    <li role="presentation">
-                                        <a href="#denied" role="tab" data-toggle="tab">
-                                            Denied Requests
-                                        </a>
-                                    </li>
-
-                                </ul>
-                                <!--^^ Tab Nav -->
-
-                                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-                                <!-- Tab Content -->
-                                <div class="tab-content borders">
-
-                                    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-                                    <!-- Approved Requests panel content -->
-                                    <div role="tabpanel" class="tab-pane" id="approved">
-
-                                        <h5 class="card-title">Requests</h5>
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">Date Submitted</th>
-                                                    <th scope="col">Amount</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">User</th>
-                                                    <th scope="col">Manager</th>
-                                                    <th scope="col">Receipt</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="approvedTable"></tbody>
-                                            </table>
-                                        </div>
-                                        <div class="text-center"><a href="/newRequest">Add a New Request</a></div>
+                                    <h5 class="card-title">Approved Requests</h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Date Submitted</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">User</th>
+                                                <th scope="col">Manager</th>
+                                                <th scope="col">Receipt</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="approvedTable"></tbody>
+                                        </table>
                                     </div>
 
-
-                                    <!--^^December Graduates panel content -->
-
-                                    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-                                    <!-- Denied panel content -->
-                                    <div role="tabpanel" class="tab-pane active" id="denied">
-                                        <h5 class="card-title">Requests</h5>
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">Date Submitted</th>
-                                                    <th scope="col">Amount</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">User</th>
-                                                    <th scope="col">Manager</th>
-                                                    <th scope="col">Receipt</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="deniedTable"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
                                 </div>
+                                <!--^^August Graduates panel content -->
+
+                                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                <!-- May Graduates panel content -->
+                                <div role="tabpanel" class="tab-pane" id="denied">
+
+                                    <h5 class="card-title">Denied Requests</h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Date Submitted</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">User</th>
+                                                <th scope="col">Manager</th>
+                                                <th scope="col">Receipt</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="deniedTable"></tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <!--^^May Graduates panel content -->
+
                             </div>
+                            <!--^^tab content -->
+
                         </div>
+                        <!--^^tabs -->
+
                     </div>
+                    <!--^^container -->
+
+                    <br>
                 </div>
             </div>
-            <!--^^May Graduates panel content -->
-
         </div>
-        <!--^^tab content -->
-
     </div>
-    <!--^^tabs -->
-
-    <br>
+    </div>
 
 </section>
-
-<!--<div class="container">-->
-<!--<div class="row">-->
-<!--<div class="col-sm-10 mx-auto">-->
-<!--<div class="card card-signin">-->
-<!--<div class="card-body">-->
-<!--<h5 class="card-title">Requests</h5>-->
-<!--<div class="table-responsive">-->
-<!--<table class="table">-->
-<!--<thead>-->
-<!--<tr>-->
-<!--<th scope="col">Date Submitted</th>-->
-<!--<th scope="col">Amount</th>-->
-<!--<th scope="col">Status</th>-->
-<!--<th scope="col">User</th>-->
-<!--<th scope="col">Manager</th>-->
-<!--<th scope="col">Receipt</th>-->
-<!--</tr>-->
-<!--</thead>-->
-<!--<tbody id="requestTable"></tbody>-->
-<!--</table>-->
-<!--</div>-->
-<!--<div class="text-center"><a href="/newRequest">Add a New Request</a></div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
 </body>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
         integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
         crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/eProfile.js"></script>
+<script type="text/javascript" src="js/history.js"></script>
 </html>

@@ -162,4 +162,57 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
         return employees;
     }
+
+    @Override
+    public boolean updateEmployee(Employee e) {
+        PreparedStatement pstmt;
+
+        if (e == null) {
+            return false;
+        }
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "UPDATE EMPLOYEE SET F_NAME = ?, L_NAME = ?, USERNAME = ?, EMAIL = ? WHERE EMPLOYEE_ID = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, e.getFirstName());
+            pstmt.setString(2, e.getLastName());
+            pstmt.setString(3, e.getUsername());
+            pstmt.setString(4, e.getEmail());
+            pstmt.setInt(5, e.getEmployeeId());
+
+            if (pstmt.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (SQLException | IOException e1) {
+            e1.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<Employee> getManagers() {
+        PreparedStatement pstmt;
+        List<Employee> employees = new ArrayList<>();
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "SELECT * FROM EMPLOYEE WHERE IS_MANAGER = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, 1);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("EMPLOYEE_ID");
+                String fName = rs.getString("F_NAME");
+                String lName = rs.getString("L_NAME");
+                String uName = rs.getString("USERNAME");
+                String email = rs.getString("EMAIL");
+                boolean isManager = rs.getBoolean("IS_MANAGER");
+                employees.add(new Employee(id, fName, lName, uName, email, isManager));
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return employees;
+    }
 }

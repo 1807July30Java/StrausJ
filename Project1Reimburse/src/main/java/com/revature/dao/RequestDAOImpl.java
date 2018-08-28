@@ -103,6 +103,33 @@ public class RequestDAOImpl implements RequestDAO {
     }
 
     @Override
+    public List<Request> getAllByCode(int statusCode) {
+        List<Request> rl = new ArrayList<>();
+        PreparedStatement pstmt;
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE STATUS = ? ORDER BY DATE_TIME DESC";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, statusCode);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int reqID = rs.getInt("REQUEST_ID");
+                int eID = rs.getInt("EMPLOYEE_ID");
+                double amount = rs.getDouble("AMOUNT");
+                int status = rs.getInt("STATUS");
+                String desc = rs.getString("DESCRIPTION");
+                LocalDateTime dateTime = rs.getTimestamp("DATE_TIME").toLocalDateTime();
+                rl.add(new Request(reqID, eID, amount, status, desc, dateTime));
+            }
+        } catch (SQLException | IOException e) {
+            System.out.println("Cannot Connect");
+        }
+        return rl;
+    }
+
+    @Override
     public List<Request> getAllManagerRequest(int managerID, int statusCode) {
         List<Request> rl = new ArrayList<>();
         PreparedStatement pstmt;

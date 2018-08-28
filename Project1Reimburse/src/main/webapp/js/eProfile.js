@@ -9,6 +9,10 @@ function sendAjaxGet(url, func) {
     xhr.send();
 }
 
+function makeModal(id) {
+    document.getElementById("modal-image").setAttribute("src", "http://localhost:8084/image?id="+id);
+}
+
 function populateRequests(xhr) {
     if (xhr.responseText) {
         var res = JSON.parse(xhr.responseText);
@@ -33,7 +37,7 @@ function populateRequests(xhr) {
                     status.innerText = "Accepted"
                 };
                 var receipt = document.createElement("td");
-                receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='sendAjaxGet(\"http://localhost:8084/data?entity=receipt&get=" + res[i].requestID + "\", makeModal)'>View Receipt</button>";
+                receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
                 row.append(date, amount, status, receipt);
             }
         }

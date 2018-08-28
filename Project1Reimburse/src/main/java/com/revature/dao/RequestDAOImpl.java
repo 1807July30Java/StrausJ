@@ -4,8 +4,8 @@ import com.revature.bean.Employee;
 import com.revature.bean.Request;
 import com.revature.util.ConnectionUtil;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -53,7 +53,7 @@ public class RequestDAOImpl implements RequestDAO {
         PreparedStatement pstmt;
 
         try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
-            String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE EMPLOYEE_ID = ? AND STATUS = ?";
+            String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE EMPLOYEE_ID = ? AND STATUS = ? ORDER BY DATE_TIME DESC";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, employeeID);
             pstmt.setInt(2, statusCode);
@@ -81,7 +81,7 @@ public class RequestDAOImpl implements RequestDAO {
         PreparedStatement pstmt;
 
         try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
-            String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE EMPLOYEE_ID = ?";
+            String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE EMPLOYEE_ID = ? ORDER BY DATE_TIME DESC";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, employeeID);
 
@@ -113,7 +113,7 @@ public class RequestDAOImpl implements RequestDAO {
 
             try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
                 for (Employee aManaged : managed) {
-                    String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE EMPLOYEE_ID = ? AND STATUS = ?";
+                    String sql = "SELECT REQUEST_ID, EMPLOYEE_ID, STATUS, DESCRIPTION, DATE_TIME, AMOUNT FROM REQUEST WHERE EMPLOYEE_ID = ? AND STATUS = ? ORDER BY DATE_TIME DESC";
                     pstmt = con.prepareStatement(sql);
                     pstmt.setInt(1, aManaged.getEmployeeId());
                     pstmt.setInt(2, statusCode);
@@ -137,33 +137,33 @@ public class RequestDAOImpl implements RequestDAO {
     }
 
     @Override
-    public boolean addRequestWithReceipt(Request r, FileInputStream blob) {
+    public boolean addRequestWithReceipt(Request r, InputStream blob) {
         PreparedStatement pstmt;
         if (r == null) {
             return false;
         }
 
         try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
-            String sql = "INSERT INTO REQUEST (EMPLOYEE_ID, STATUS, DESCRIPTION, RECEIPT, DATE_TIME, AMOUNT) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO REQUEST (EMPLOYEE_ID, DESCRIPTION, RECEIPT, DATE_TIME, AMOUNT) VALUES (?,?,?,?,?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, r.getEmployeeId());
-            pstmt.setInt(2, r.getStatus());
-            pstmt.setString(3, r.getDescription());
-            pstmt.setBinaryStream(4, blob);
-            pstmt.setTimestamp(5, Timestamp.from(Instant.now()));
-            pstmt.setDouble(6, r.getAmount());
+            pstmt.setString(2, r.getDescription());
+            pstmt.setBlob(3, blob);
+            pstmt.setTimestamp(4, Timestamp.from(Instant.now()));
+            pstmt.setDouble(5, r.getAmount());
 
             if (pstmt.executeUpdate() > 0) {
                 return true;
             }
         } catch (SQLException | IOException e) {
+            e.printStackTrace();
             System.out.println("Cannot Connect");
         }
         return false;
     }
 
     @Override
-    public boolean addReceipt(int requestID, FileInputStream blob) {
+    public boolean addReceipt(int requestID, InputStream blob) {
         PreparedStatement pstmt;
         if (requestID <= 0) {
             return false;
@@ -172,7 +172,7 @@ public class RequestDAOImpl implements RequestDAO {
         try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
             String sql = "UPDATE REQUEST SET RECEIPT = ? WHERE REQUEST_ID = ?";
             pstmt = con.prepareStatement(sql);
-            pstmt.setBinaryStream(1, blob);
+            pstmt.setBlob(1, blob);
             pstmt.setInt(2, requestID);
 
             if (pstmt.executeUpdate() > 0) {
@@ -205,5 +205,30 @@ public class RequestDAOImpl implements RequestDAO {
         }
 
         return false;
+    }
+
+    @Override
+    public byte[] getReceipt(int requestID) {
+        PreparedStatement pstmt;
+        byte[] image = null;
+
+        if (requestID < 0) {
+            return image;
+        }
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "SELECT RECEIPT FROM REQUEST WHERE REQUEST_ID = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, requestID);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                image = rs.getBytes("RECEIPT");
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return image;
     }
 }

@@ -15,4 +15,9 @@ public class AuthenticationUtil {
         Employee e = ed.getEmployeeByUName(username);
         return e.isManager();
     }
+
+    public static int getEmployeeId(String username) {
+        EmployeeDAO ed = new EmployeeDAOImpl();
+        return ed.getEmployeeByUName(username).getEmployeeId();
+    }
 }

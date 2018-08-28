@@ -28,6 +28,12 @@ public class Request {
         this.dateTime = dateTime;
     }
 
+    public Request(int employeeId, double amount, String description) {
+        this.employeeId = employeeId;
+        this.amount = amount;
+        this.description = description;
+    }
+
     public int getRequestId() {
         return requestId;
     }

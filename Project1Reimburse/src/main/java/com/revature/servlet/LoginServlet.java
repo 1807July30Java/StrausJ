@@ -20,6 +20,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username", username);
             session.setAttribute("password", password);
             session.setAttribute("problem", null);
+            session.setAttribute("id", AuthenticationUtil.getEmployeeId(username));
             response.sendRedirect("profile");
         } else {
             session.setAttribute("problem", "Incorrect Password");

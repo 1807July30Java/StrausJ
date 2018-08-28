@@ -3,10 +3,13 @@ package com.revature.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.bean.Employee;
+import com.revature.bean.Request;
 import com.revature.dao.EmployeeDAO;
 import com.revature.dao.EmployeeDAOImpl;
 import com.revature.dao.RequestDAO;
 import com.revature.dao.RequestDAOImpl;
+
+import java.io.InputStream;
 
 public class DispatcherUtil {
     private EmployeeDAO ed = new EmployeeDAOImpl();
@@ -51,5 +54,9 @@ public class DispatcherUtil {
                 rd.updateStatus(id, newCode);
             }
         }
+    }
+
+    public void addRequest(Request r, InputStream fs) {
+        rd.addRequestWithReceipt(r, fs);
     }
 }

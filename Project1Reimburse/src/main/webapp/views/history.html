@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Reimburse</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/profile">Profile
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/newRequest">New Request</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<br><br><br>
+<section>
+
+    <!-- Content Container -->
+    <div class="container-fluid">
+
+        <br>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Tabs Example -->
+        <div>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+            <!-- Tab Nav -->
+            <ul class="nav nav-tabs" role="tablist">
+
+                <li role="presentation" class="active">
+                    <a href="#may" role="tab" data-toggle="tab">
+                        May {{ current_year }} Graduates
+                    </a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#august" role="tab" data-toggle="tab">
+                        August {{ current_year }} Graduates
+                    </a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#december" role="tab" data-toggle="tab">
+                        December {{ current_year }} Graduates
+                    </a>
+                </li>
+
+            </ul>
+            <!--^^ Tab Nav -->
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+            <!-- Tab Content -->
+            <div class="tab-content borders">
+
+                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                <!-- August Graduates panel content -->
+                <div role="tabpanel" class="tab-pane" id="august">
+
+                    <h2>August {{ current_year }} Graduates:</h2>
+                    <h3 class="text-center"><button class="complete btn-icBlue" id=8>Remove Complete Grads</button></h3>
+                    <br>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Student ID</th>
+                            <th>Major</th>
+                            <th># Items Out</th>
+                        </tr>
+                        </thead>
+                        {% for item in aug_grads %}
+                        <tr>
+                            <td><a href="{{ url_for('account_detail', a_id=item[0].account_id) }}">{{ get_super(item[0].account_id).name }}</a></td>
+                            <td>{{ item[0].borrow_id }}</td>
+                            <td>{{ item[0].major }}</td>
+                            <td>{{ get_super(item[0].account_id).accountSignout_assoc|length }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                </div>
+                <!--^^August Graduates panel content -->
+
+                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                <!-- December Graduates panel content -->
+                <div role="tabpanel" class="tab-pane" id="december">
+
+                    <h2>December {{ current_year }} Graduates:</h2>
+                    <h3 class="text-center"><button class="complete btn-icBlue" id=12>Remove Complete Grads</button></h3>
+                    <br>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Student ID</th>
+                            <th>Major</th>
+                            <th># Items Out</th>
+                        </tr>
+                        </thead>
+                        {% for item in dec_grads %}
+                        <tr>
+                            <td><a href="{{ url_for('account_detail', a_id=item[0].account_id) }}">{{ get_super(item[0].account_id).name }}</a></td>
+                            <td>{{ item[0].borrow_id }}</td>
+                            <td>{{ item[0].major }}</td>
+                            <td>{{ get_super(item[0].account_id).accountSignout_assoc|length }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                </div>
+                <!--^^December Graduates panel content -->
+
+                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                <!-- Denied panel content -->
+                <div role="tabpanel" class="tab-pane active" id="denied">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-10 mx-auto">
+                                <div class="card card-signin">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Requests</h5>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Date Submitted</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">User</th>
+                                                    <th scope="col">Manager</th>
+                                                    <th scope="col">Receipt</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="deniedTable"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--^^May Graduates panel content -->
+
+            </div>
+            <!--^^tab content -->
+
+        </div>
+        <!--^^tabs -->
+
+    </div>
+    <!--^^container -->
+
+    <br>
+
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 mx-auto">
+            <div class="card card-signin">
+                <div class="card-body">
+                    <h5 class="card-title">Requests</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date Submitted</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Manager</th>
+                                <th scope="col">Receipt</th>
+                            </tr>
+                            </thead>
+                            <tbody id="requestTable"></tbody>
+                        </table>
+                    </div>
+                    <div class="text-center"><a href="/newRequest">Add a New Request</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+        integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/eProfile.js"></script>
+</html>

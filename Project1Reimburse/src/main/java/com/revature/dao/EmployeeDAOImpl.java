@@ -2,6 +2,7 @@ package com.revature.dao;
 
 import com.revature.bean.Employee;
 import com.revature.util.ConnectionUtil;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import java.util.List;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private String filename = "connection.properties";
+    private static Logger log = Logger.getRootLogger();
 
     @Override
     public Employee getEmployeeByID(int employeeId) {
@@ -40,10 +42,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 int managed_by = rs.getInt("MANAGED_BY");
                 boolean isManager = rs.getBoolean("IS_MANAGER");
                 e = new Employee(employeeID, f_name, l_name, u_name, pass, email, managed_by, isManager);
+                log.info("Employee" + f_name + " " + l_name+ " was retrieved");
+            } else {
+                log.info("No matching user found");
             }
-
         } catch (SQLException | IOException ex) {
-            System.out.println("Cannot Connect");
+            log.error(ex.getStackTrace());
         }
         return e;
     }
@@ -68,13 +72,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 int manageBy = rs.getInt("MANAGED_BY");
                 boolean isManager = rs.getBoolean("IS_MANAGER");
                 e = new Employee(id, fName, lName, uName, password, email, manageBy, isManager);
+                log.info("Employee" + fName + " " + lName+ " was retrieved");
             } else {
-                System.out.println("No users with that username/password combo");
+                log.info("No users with that username/password combo");
             }
-            con.close();
-            return e;
         } catch (SQLException | IOException e1) {
-            e1.printStackTrace();
+            log.error(e1.getStackTrace());
         }
         return e;
     }
@@ -98,13 +101,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 int manageBy = rs.getInt("MANAGED_BY");
                 boolean isManager = rs.getBoolean("IS_MANAGER");
                 e = new Employee(id, fName, lName, uName, password, email, manageBy, isManager);
+                log.info("Employee" + fName + " " + lName+ " was retrieved");
             } else {
-                System.out.println("No users with that username/password combo");
+                log.info("No users with that username/password combo");
             }
-            con.close();
-            return e;
         } catch (SQLException | IOException e1) {
-            e1.printStackTrace();
+            log.error(e1.getStackTrace());
         }
         return e;
     }
@@ -128,11 +130,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             pstmt.setBoolean(7, e.isManager());
 
             if (pstmt.executeUpdate() > 0) {
+                log.info("Employee " + e.getFirstName() + " " + e.getLastName() + " was created");
                 return true;
+            } else {
+                log.error("Something went wrong!");
             }
 
         } catch (SQLException | IOException ex) {
-            ex.printStackTrace();
+            log.error(ex.getStackTrace());
         }
         return false;
     }
@@ -157,8 +162,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 boolean isManager = rs.getBoolean("IS_MANAGER");
                 employees.add(new Employee(id, fName, lName, uName, email, isManager));
             }
+            log.info("Managed employees grabbed");
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            log.error(e.getStackTrace());
         }
         return employees;
     }
@@ -181,10 +187,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             pstmt.setInt(5, e.getEmployeeId());
 
             if (pstmt.executeUpdate() > 0) {
+                log.info("Employee: " + e.getFirstName() + " " + e.getLastName() + " was updated");
                 return true;
+            } else {
+                log.info("Something went wrong!");
             }
         } catch (SQLException | IOException e1) {
-            e1.printStackTrace();
+            log.error(e1.getStackTrace());
         }
 
         return false;
@@ -210,8 +219,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 boolean isManager = rs.getBoolean("IS_MANAGER");
                 employees.add(new Employee(id, fName, lName, uName, email, isManager));
             }
+            log.info("Managers were grabbed");
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            log.error(e.getStackTrace());
         }
         return employees;
     }
@@ -234,11 +244,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             pstmt.setBoolean(6, e.isManager());
 
             if (pstmt.executeUpdate() > 0) {
+                log.info("Employee: " + e.getFirstName() + " " + e.getLastName() + " was created");
                 return true;
             }
 
         } catch (SQLException | IOException ex) {
-            ex.printStackTrace();
+            log.error(ex.getStackTrace());
         }
         return false;
     }

@@ -30,7 +30,13 @@ public class NewEmployeeServlet extends HttpServlet {
             String fName = request.getParameter("firstName");
             String lName = request.getParameter("lastName");
             String email = request.getParameter("email");
-            boolean isManager = request.getParameter("isManager").equals("isManager");
+            boolean isManager;
+            if (request.getParameter("isManager") != null && request.getParameter("isManager").equals("isManager")) {
+                isManager = request.getParameter("isManager").equals("isManager");
+            } else {
+                isManager = false;
+            }
+
             DispatcherUtil du = new DispatcherUtil();
 
             int managedBy;
@@ -41,7 +47,6 @@ public class NewEmployeeServlet extends HttpServlet {
                 managedBy = 0;
                 du.addManager(new Employee(fName, lName, username, password, email, managedBy, isManager));
             }
-
 
 
             response.sendRedirect("profile");

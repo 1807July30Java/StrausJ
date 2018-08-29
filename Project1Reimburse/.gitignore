@@ -322,3 +322,4 @@ testem.log
 /e2e/*.map
 
 #System Files
+/src/main/resources/log4j.properties

@@ -78,4 +78,8 @@ public class DispatcherUtil {
     public void addEmployee(Employee e) {
         ed.addEmployee(e);
     }
+
+    public void addManager(Employee e) {
+        ed.addManager(e);
+    }
 }

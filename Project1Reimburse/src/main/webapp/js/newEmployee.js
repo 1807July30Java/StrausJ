@@ -19,7 +19,6 @@ function populateOptions(xhr) {
             var option = document.createElement("option");
             option.value = res[i].employeeId;
             option.innerText = res[i].firstName + " " + res[i].lastName;
-            console.log(option);
             document.getElementById("managedBy").appendChild(option);
         }
     }

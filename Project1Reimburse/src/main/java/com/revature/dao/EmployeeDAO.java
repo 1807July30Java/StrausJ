@@ -19,4 +19,6 @@ public interface EmployeeDAO {
 
     List<Employee> getManagers();
 
+    boolean addManager(Employee e);
+
 }

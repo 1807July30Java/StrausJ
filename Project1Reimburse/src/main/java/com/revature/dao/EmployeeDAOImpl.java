@@ -215,4 +215,31 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
         return employees;
     }
+
+    @Override
+    public boolean addManager(Employee e) {
+        PreparedStatement pstmt;
+        if (e == null) {
+            return false;
+        }
+
+        try (Connection con = ConnectionUtil.getConnectionFromFile(filename)) {
+            String sql = "INSERT INTO EMPLOYEE (F_NAME, L_NAME, USERNAME, PASSWORD, EMAIL, IS_MANAGER) VALUES (?,?,?,?,?,?)";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, e.getFirstName());
+            pstmt.setString(2, e.getLastName());
+            pstmt.setString(3, e.getUsername());
+            pstmt.setInt(4, e.getPassword());
+            pstmt.setString(5, e.getEmail());
+            pstmt.setBoolean(6, e.isManager());
+
+            if (pstmt.executeUpdate() > 0) {
+                return true;
+            }
+
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }

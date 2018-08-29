@@ -73,7 +73,6 @@ function populateDenied(xhr) {
                 amount.innerText = "$ " + res[i].amount;
                 var user = document.createElement("td");
                 var manager = document.createElement("td");
-                // console.log(res[i].employeeId);
                 sendAjaxManagerGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
                 var receipt = document.createElement("td");
                 receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
@@ -100,8 +99,7 @@ function populateApproved(xhr) {
                 amount.innerText = "$ " + res[i].amount;
                 var user = document.createElement("td");
                 var manager = document.createElement("td");
-                // console.log(res[i].employeeId);
-                sendAjaxUserGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
+                sendAjaxManagerGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
                 var receipt = document.createElement("td");
                 receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
                 row.append(date, amount, user, manager, receipt);
@@ -113,4 +111,4 @@ function populateApproved(xhr) {
 window.onload = function () {
     sendAjaxGet("http://localhost:8084/data?entity=request&get=allApproved", populateApproved);
     sendAjaxGet("http://localhost:8084/data?entity=request&get=allDenied", populateDenied);
-}
+};

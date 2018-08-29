@@ -60,7 +60,6 @@ function populateRequests(xhr) {
                 var amount = document.createElement("td");
                 amount.innerText = "$ " + res[i].amount;
                 var user = document.createElement("td");
-                // console.log(res[i].employeeId);
                 sendAjaxUserGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user);
                 var approve = document.createElement("td");
                 var id = res[i].requestId;

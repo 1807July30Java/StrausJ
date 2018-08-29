@@ -1127,4 +1127,111 @@ Angular
 
 	Directive: A custom html element/attribute used to extend html features
 
-	 
+
+
+******************** Wednesday August 29th ********************
+
+Hibernate
+	ORM: Object Relational Mapping
+		Establish relationships between our database entities and java objects
+		Reduce amount of raw JDBC
+		Eliminate Boilerplate Code
+
+	HQL: Hibernate Query Language
+	Allows us to write queries in terms of java objects instead of SQL entities
+	A counterpoint to Native SQL
+	Translates from HQL --> Native SQL
+
+	Two Approaches:
+		Database first:
+			Connecting to an existing database
+
+		Code First:	
+			Hibernate generates entities based on your mappings
+
+	org.hibernate (v4)
+	javax.persistence (jpa Java Persistence API)
+	HibernateException
+		Base Throwable Type
+		Runtime Exception
+
+	Hibernate Interfaces:
+		Session
+			Represents a connection to the database
+			Load/Get
+			Save/Persist
+			Update/Merge
+			Delete
+			createQuery
+			createCriteria
+			etc...
+
+		SessionFactory
+			Used to obtain sessions
+			Singleton --> Only have one in our app
+
+		Configuration
+			Interface used to create SessionFactory
+			Hibernate.cfg.xml
+
+		Transaction
+			for managing acid-compliant TX.
+			Autocommit is false by default
+			.commit(); .rollback(); .savepoint();
+			Unify sql & java error handling
+
+		Query
+			More sophisticated ops than session methods
+			Use HQL or Native SQL
+			Full DML
+
+		Criteria
+			Structured and programmatic way of writing DQL
+
+	Mappings
+		Specify details of classes and properties and how they relate to db entities
+		XML or Annotations
+
+		XML:
+			hbm file "Hibernate Mapping" File
+
+			Flashcard.html.xml
+				Reference in hibernate.cfg.xml
+
+				<hibernate-mapping>
+					<class name="em.ex.beus.Flashcard" table="FLASHCARD">
+						<id name="id" column="F_ID">
+							<generator class="increment"/>
+						</id>
+
+					</class>
+
+		Annotations:
+			JPA Annotations (Hibernate has own, but these are standard)
+
+			@Entity
+			@Table
+			@ID --> PK
+			@Column
+
+			Multiplicity:
+				@OneToOne
+				@ManyToOne
+				@OneToMany
+				@ManyToMany
+
+		Unidirectional Mappings
+			One entity is aware of relationship
+
+		FetchType
+			Eager --> Entire Related Entity
+			Lazy --> Proxy object
+
+			Try to access a lazily fetched object after session closes get LazyInitializationException
+
+		Bidirectional Mapping
+			Both entities are aware of the relationship
+			@OneToMany(mappedBy='cave' fetch=FetchType.LAZY)
+			List<Bear> bears;
+
+			Can be costly and can cause infinite loops

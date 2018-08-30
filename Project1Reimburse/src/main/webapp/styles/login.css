@@ -191,6 +191,7 @@ body {
     border-top-right-radius: 0;
 }
 
-input[type="checkbox"] {
-
+.scrollable {
+    overflow: auto;
+    max-height: 500px;
 }

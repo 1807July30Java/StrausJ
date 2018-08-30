@@ -3,6 +3,7 @@ package com.revature.dao;
 import com.revature.bean.Employee;
 import com.revature.util.ConnectionUtil;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,6 +17,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     private String filename = "connection.properties";
     private static Logger log = Logger.getRootLogger();
+
+//    public EmployeeDAOImpl() {
+//        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+//        PropertyConfigurator.configure(loader.getResourceAsStream("WEB-INF/classes/log4j.properties"));
+//    }
 
     @Override
     public Employee getEmployeeByID(int employeeId) {

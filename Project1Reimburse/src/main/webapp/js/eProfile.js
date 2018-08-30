@@ -28,6 +28,12 @@ function populateRequests(xhr) {
                 date.innerText = requestDate.toLocaleDateString() + " " + requestDate.toLocaleTimeString();
                 var amount = document.createElement("td");
                 amount.innerText = "$ " + res[i].amount;
+                var desc = document.createElement("td");
+                if (res[i].description) {
+                    desc.innerText = res[i].description;
+                } else {
+                    desc.innerText = "No Description";
+                }
                 var status = document.createElement("td");
                 if (res[i].status === 0) {
                     status.innerText = "Rejected";
@@ -38,7 +44,7 @@ function populateRequests(xhr) {
                 };
                 var receipt = document.createElement("td");
                 receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
-                row.append(date, amount, status, receipt);
+                row.append(date, amount, desc, status, receipt);
             }
         }
     }

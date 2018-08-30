@@ -71,12 +71,18 @@ function populateDenied(xhr) {
                 date.innerText = requestDate.toLocaleDateString() + " " + requestDate.toLocaleTimeString();
                 var amount = document.createElement("td");
                 amount.innerText = "$ " + res[i].amount;
+                var desc = document.createElement("td");
+                if (res[i].description) {
+                    desc.innerText = res[i].description;
+                } else {
+                    desc.innerText = "No Description";
+                }
                 var user = document.createElement("td");
                 var manager = document.createElement("td");
                 sendAjaxManagerGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
                 var receipt = document.createElement("td");
                 receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
-                row.append(date, amount, user, manager, receipt);
+                row.append(date, amount, desc, user, manager, receipt);
             }
         }
     }
@@ -97,12 +103,18 @@ function populateApproved(xhr) {
                 date.innerText = requestDate.toLocaleDateString() + " " + requestDate.toLocaleTimeString();
                 var amount = document.createElement("td");
                 amount.innerText = "$ " + res[i].amount;
+                var desc = document.createElement("td");
+                if (res[i].description) {
+                    desc.innerText = res[i].description;
+                } else {
+                    desc.innerText = "No Description";
+                }
                 var user = document.createElement("td");
                 var manager = document.createElement("td");
                 sendAjaxManagerGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
                 var receipt = document.createElement("td");
                 receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
-                row.append(date, amount, user, manager, receipt);
+                row.append(date, amount, desc, user, manager, receipt);
             }
         }
     }

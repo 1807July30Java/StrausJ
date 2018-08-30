@@ -1235,3 +1235,28 @@ Hibernate
 			List<Bear> bears;
 
 			Can be costly and can cause infinite loops
+
+
+
+
+******************** Thursday August 30th ********************
+
+Hibernate Object States
+	The session object has a "Persistence Context" ("Contextual Sessions")
+	This is the scope of all your interactions during a given session
+	Objects have a state relative to this context
+	Having a Java object of a mapped type does not mean that there is a representation of that object within the database
+
+	Transient
+		There is no representation of the object within the Persistence Context
+		Java-Side only
+		No primary key
+
+	Persistent
+		Has a persistent identity
+		Within the context of a session
+		Even if no DB representation yet, might not be committed, can still be persistent
+
+	Detached
+
+Hibernate Session Methods

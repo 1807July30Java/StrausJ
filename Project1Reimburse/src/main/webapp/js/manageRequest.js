@@ -59,6 +59,12 @@ function populateRequests(xhr) {
                 date.innerText = requestDate.toLocaleDateString() + " " + requestDate.toLocaleTimeString();
                 var amount = document.createElement("td");
                 amount.innerText = "$ " + res[i].amount;
+                var desc = document.createElement("td");
+                if (res[i].description) {
+                    desc.innerText = res[i].description;
+                } else {
+                    desc.innerText = "No Description";
+                }
                 var user = document.createElement("td");
                 sendAjaxUserGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user);
                 var approve = document.createElement("td");
@@ -66,7 +72,7 @@ function populateRequests(xhr) {
                 approve.innerHTML = "<button class=\"btn btn-sm btn-deny btn-block btn-primary text-uppercase\" onclick='sendAjaxPost(\"http://localhost:8084/data?entity=request&get=update\", removeRow(" + id + "), " + id + ", 2)'>Approve</button>";
                 var deny = document.createElement("td");
                 deny.innerHTML = "<button class='btn btn-sm btn-deny btn-block btn-primary text-uppercase' onclick='sendAjaxPost(\"http://localhost:8084/data?entity=request&get=update\", removeRow(" + id + "), " + id + ", 0)'>Deny</button>";
-                row.append(date, amount, user, approve, deny);
+                row.append(date, amount, desc, user, approve, deny);
             }
         }
     }

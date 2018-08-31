@@ -40,7 +40,7 @@ public class NewEmployeeServlet extends HttpServlet {
             DispatcherUtil du = new DispatcherUtil();
 
             int managedBy;
-            if (request.getParameter("managedBy") == null) {
+            if (request.getParameter("managedBy") != null) {
                 managedBy = Integer.parseInt(request.getParameter("managedBy"));
                 du.addEmployee(new Employee(fName, lName, username, password, email, managedBy, isManager));
             } else {

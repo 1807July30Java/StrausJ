@@ -44,6 +44,10 @@ function removeRow(id) {
     element.parentElement.removeChild(element);
 }
 
+function makeModal(id) {
+    document.getElementById("modal-image").setAttribute("src", "http://localhost:8084/image?id=" + id);
+}
+
 function populateRequests(xhr) {
     if (xhr.responseText) {
         var res = JSON.parse(xhr.responseText);
@@ -72,7 +76,9 @@ function populateRequests(xhr) {
                 approve.innerHTML = "<button class=\"btn btn-sm btn-deny btn-block btn-primary text-uppercase\" onclick='sendAjaxPost(\"http://localhost:8084/data?entity=request&get=update\", removeRow(" + id + "), " + id + ", 2)'>Approve</button>";
                 var deny = document.createElement("td");
                 deny.innerHTML = "<button class='btn btn-sm btn-deny btn-block btn-primary text-uppercase' onclick='sendAjaxPost(\"http://localhost:8084/data?entity=request&get=update\", removeRow(" + id + "), " + id + ", 0)'>Deny</button>";
-                row.append(date, amount, desc, user, approve, deny);
+                var receipt = document.createElement("td");
+                receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
+                row.append(date, amount, desc, user, receipt, approve, deny);
             }
         }
     }

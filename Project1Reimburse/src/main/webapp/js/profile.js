@@ -30,7 +30,7 @@ function populateEmployees(xhr) {
 }
 
 function makeModal(id) {
-        document.getElementById("modal-image").setAttribute("src", "http://localhost:8084/image?id="+id);
+    document.getElementById("modal-image").setAttribute("src", "http://localhost:8084/image?id=" + id);
 }
 
 function populateRequests(xhr) {
@@ -44,7 +44,7 @@ function populateRequests(xhr) {
                 table.appendChild(row);
                 var date = document.createElement("td");
                 var tempDate = res[i].dateTime;
-                var requestDate = new Date(tempDate.year, tempDate.monthValue-1, tempDate.dayOfMonth, tempDate.hour, tempDate.minute, tempDate.second);
+                var requestDate = new Date(tempDate.year, tempDate.monthValue - 1, tempDate.dayOfMonth, tempDate.hour, tempDate.minute, tempDate.second);
                 date.innerText = requestDate.toLocaleDateString() + " " + requestDate.toLocaleTimeString();
                 var amount = document.createElement("td");
                 amount.innerText = "$ " + res[i].amount;

@@ -1258,5 +1258,66 @@ Hibernate Object States
 		Even if no DB representation yet, might not be committed, can still be persistent
 
 	Detached
+		If session closes, its persistent objects become Detached
+		May have a persistent identity and a database representation, but not necessarily related to a session
 
 Hibernate Session Methods
+	Data Retrieval
+		GET
+			Will eagerly fetch an object by the primary key
+
+		LOAD
+			Will lazily fetch an object by the primary key
+			Returns a proxy object
+			Can be filled in if accessed during a session, otherwise LazyInitializationException
+
+	Data Insertion
+		SAVE
+			Returns generated primary key IMMEDIATELY
+			Doesn't guarantee immediate persistence
+			Can execute outside of the scope of a transaction
+		PERSIST
+			Takes transient object and makes it persistent
+			Has a void return type and has to execute in a transaction
+
+	Data Modification
+		UPDATE
+			Brings a representation of the object and brings it into the persistence state
+			If Obj with same persistent identity (PK) exists in persistence context: NonUniqueObjectException
+			Use on object that are transient or detached
+
+		MERGE
+			Checks to see if persistent object with the same ID already exists
+			If not: Brings existing object into Persistence Context
+			Copies object values onto persistent version
+
+
+	Other
+		SaveOrUpdate
+			Catchall Method
+			Brings an object into the persistence state regardless of where it started
+			
+Alternatives to Session Methods
+	With session methods, 1 object at a time
+	Needed to know id
+	Only had simple CRUD
+
+	Criteria
+
+	Query
+		Good if you want more than one object
+		Written in HQL (Hibernate Query Language), with full DML
+		Query q = s.createQuery("from Bear where name = :someParam");
+		q.setParameter("someParam", "Smokey")
+		List<Bear> lb = q.list();
+
+		q.executeUpdate() --> Returns number of rows affected
+		
+		Fine for updates and retrievals
+		Select keywords (Where, Having, From, GroupBy, Join)
+
+		To Get:
+			.List()
+			.executeUpdate()
+			.uniqueResult() --> Throws NonUniqueResultException
+			

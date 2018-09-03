@@ -1,0 +1,10 @@
+2018-09-03 11:38:55 INFO  root:110 - EmployeeJeremy Straus was retrieved
+2018-09-03 11:38:56 INFO  root:110 - EmployeeJeremy Straus was retrieved
+2018-09-03 11:38:56 INFO  root:83 - No users with that username/password combo
+2018-09-03 11:38:56 INFO  root:110 - EmployeeLandon Renzullo was retrieved
+2018-09-03 11:38:56 INFO  root:110 - EmployeeLandon Renzullo was retrieved
+2018-09-03 11:38:56 INFO  root:112 - No users with that username/password combo
+2018-09-03 11:38:57 INFO  root:110 - EmployeeJeremy Straus was retrieved
+2018-09-03 11:38:57 INFO  root:110 - EmployeeJeremy Straus was retrieved
+2018-09-03 11:38:57 INFO  root:81 - EmployeeJeremy Straus was retrieved
+2018-09-03 11:38:57 INFO  root:112 - No users with that username/password combo

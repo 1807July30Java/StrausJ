@@ -45,7 +45,7 @@ function removeRow(id) {
 }
 
 function makeModal(id) {
-    document.getElementById("modal-image").setAttribute("src", "http://localhost:8084/image?id=" + id);
+    document.getElementById("modal-image").setAttribute("src", "http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/image?id=" + id);
 }
 
 function populateRequests(xhr) {
@@ -70,12 +70,12 @@ function populateRequests(xhr) {
                     desc.innerText = "No Description";
                 }
                 var user = document.createElement("td");
-                sendAjaxUserGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user);
+                sendAjaxUserGet('http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=employee&get=' + res[i].employeeId, populateUser, user);
                 var approve = document.createElement("td");
                 var id = res[i].requestId;
-                approve.innerHTML = "<button class=\"btn btn-sm btn-deny btn-block btn-primary text-uppercase\" onclick='sendAjaxPost(\"http://localhost:8084/data?entity=request&get=update\", removeRow(" + id + "), " + id + ", 2)'>Approve</button>";
+                approve.innerHTML = "<button class=\"btn btn-sm btn-deny btn-block btn-primary text-uppercase\" onclick='sendAjaxPost(\"http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=request&get=update\", removeRow(" + id + "), " + id + ", 2)'>Approve</button>";
                 var deny = document.createElement("td");
-                deny.innerHTML = "<button class='btn btn-sm btn-deny btn-block btn-primary text-uppercase' onclick='sendAjaxPost(\"http://localhost:8084/data?entity=request&get=update\", removeRow(" + id + "), " + id + ", 0)'>Deny</button>";
+                deny.innerHTML = "<button class='btn btn-sm btn-deny btn-block btn-primary text-uppercase' onclick='sendAjaxPost(\"http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=request&get=update\", removeRow(" + id + "), " + id + ", 0)'>Deny</button>";
                 var receipt = document.createElement("td");
                 receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
                 row.append(date, amount, desc, user, receipt, approve, deny);
@@ -85,5 +85,5 @@ function populateRequests(xhr) {
 }
 
 window.onload = function () {
-    sendAjaxGet("http://localhost:8084/data?entity=request&get=managed", populateRequests);
+    sendAjaxGet("http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=request&get=managed", populateRequests);
 };

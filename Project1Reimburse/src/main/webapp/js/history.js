@@ -47,13 +47,13 @@ function populateUser(xhr, element1, element2) {
     if (xhr.responseText) {
         var res = JSON.parse(xhr.responseText);
         element1.innerText = res.firstName + " " + res.lastName;
-        sendAjaxUserGet("http://localhost:8084/data?entity=employee&get=" + res.managedBy, populateManager, element2);
+        sendAjaxUserGet("http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=employee&get=" + res.managedBy, populateManager, element2);
     }
 
 }
 
 function makeModal(id) {
-    document.getElementById("modal-image").setAttribute("src", "http://localhost:8084/image?id=" + id);
+    document.getElementById("modal-image").setAttribute("src", "http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/image?id=" + id);
 }
 
 function populateDenied(xhr) {
@@ -79,7 +79,7 @@ function populateDenied(xhr) {
                 }
                 var user = document.createElement("td");
                 var manager = document.createElement("td");
-                sendAjaxManagerGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
+                sendAjaxManagerGet('http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
                 var receipt = document.createElement("td");
                 receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
                 row.append(date, amount, desc, user, manager, receipt);
@@ -111,7 +111,7 @@ function populateApproved(xhr) {
                 }
                 var user = document.createElement("td");
                 var manager = document.createElement("td");
-                sendAjaxManagerGet('http://localhost:8084/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
+                sendAjaxManagerGet('http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=employee&get=' + res[i].employeeId, populateUser, user, manager);
                 var receipt = document.createElement("td");
                 receipt.innerHTML = "<button class=\"btn btn-sm btn-primary btn-block text-uppercase\" onclick='makeModal(" + res[i].requestId + ")' data-toggle=\"modal\" data-target=\"#exampleModal\">View Receipt</button>";
                 row.append(date, amount, desc, user, manager, receipt);
@@ -121,6 +121,6 @@ function populateApproved(xhr) {
 }
 
 window.onload = function () {
-    sendAjaxGet("http://localhost:8084/data?entity=request&get=allApproved", populateApproved);
-    sendAjaxGet("http://localhost:8084/data?entity=request&get=allDenied", populateDenied);
+    sendAjaxGet("http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=request&get=allApproved", populateApproved);
+    sendAjaxGet("http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=request&get=allDenied", populateDenied);
 };

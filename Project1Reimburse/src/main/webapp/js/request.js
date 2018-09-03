@@ -21,4 +21,4 @@ function hideAdmin(xhr) {
     }
 }
 
-sendAjaxGet("http://localhost:8084/data?entity=employee&get=current", hideAdmin);
+sendAjaxGet("http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=employee&get=current", hideAdmin);

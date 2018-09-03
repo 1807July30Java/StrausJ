@@ -10,7 +10,7 @@ function sendAjaxGet(url, func) {
 }
 
 function makeModal(id) {
-    document.getElementById("modal-image").setAttribute("src", "http://localhost:8084/image?id="+id);
+    document.getElementById("modal-image").setAttribute("src", "http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/image?id="+id);
 }
 
 function populateRequests(xhr) {
@@ -51,5 +51,5 @@ function populateRequests(xhr) {
 }
 
 window.onload = function () {
-    sendAjaxGet("http://localhost:8084/data?entity=request&get=all", populateRequests)
+    sendAjaxGet("http://ec2-184-72-109-231.compute-1.amazonaws.com:8080/Project1/data?entity=request&get=all", populateRequests)
 };

@@ -18,12 +18,15 @@ public class ConnectionUtil {
         }
 
         Properties prop = new Properties();
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        prop.load(loader.getResourceAsStream(filename));
+//        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+//        prop.load(loader.getResourceAsStream(filename));
 
-        String url = prop.getProperty("url");
-        String username = prop.getProperty("username");
-        String password = prop.getProperty("password");
+//        String url = prop.getProperty("url");
+//        String username = prop.getProperty("username");
+//        String password = prop.getProperty("password");
+        String url = System.getenv("DB_URL");
+        String username = System.getenv("P1_DB_USERNAME");
+        String password = System.getenv("P1_DB_PASS");
 
         return DriverManager.getConnection(url, username, password);
     }

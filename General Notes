@@ -510,7 +510,7 @@ Transactions
 	Uncommitted 	Yes					Yes						Yes
 
 	Read 
-	Committed 		No 					Yes 					No
+	Committed 		No 					Yes 					Yes
 
 	Repeatable
 	Read 			No 					No 						Yes
@@ -535,30 +535,30 @@ JDBC: Java Database Connectivity
 			Use connection methods to do any configuration.
 			Autocommit is on by default
 
-Other Interfaces
-	Statement
-		Execute a string input as a SQL Query
-		Never use this - SQL Injection and all those goodies
+	Other Interfaces
+		Statement
+			Execute a string input as a SQL Query
+			Never use this - SQL Injection and all those goodies
 
-	Prepared Statement
-		A statement which represents a precompiled SQL statement
-		Use this to efficiently execute a statement multiple times
+		Prepared Statement
+			A statement which represents a precompiled SQL statement
+			Use this to efficiently execute a statement multiple times
 
-		PreparedStatement pstmt = con.prepareStatement(
-			"UPDATE EMPLOYEE
-			SET SALARY = ?
-			WHERE EID = ?");
-		pstmt.setBigDecimal(1, 81,355);
-		pstmt.setInt(2, 50);
+			PreparedStatement pstmt = con.prepareStatement(
+				"UPDATE EMPLOYEE
+				SET SALARY = ?
+				WHERE EID = ?");
+			pstmt.setBigDecimal(1, 81,355);
+			pstmt.setInt(2, 50);
 
-	CallableStatement
-		Extends PreparedStatement
-		Used to execute Stored Procedures
+		CallableStatement
+			Extends PreparedStatement
+			Used to execute Stored Procedures
 
-	ResultSet
-		A table of data representing database results
-		Maintains a cursor pointing to the first row
-		Cursor has a .next() method
+		ResultSet
+			A table of data representing database results
+			Maintains a cursor pointing to the first row
+			Cursor has a .next() method
 
 
 
@@ -621,13 +621,14 @@ Booleans
 					Undefined
 					NaN
 
-Type Coercion
-	7+7+7 = 21
-	7+7+'7' = '147'
-	7+'7'+7 = '777'
+Type Coercion: 
+	JavaScript tries to convert from one type to another.
+		7+7+7 = 21
+		7+7+'7' = '147'
+		7+'7'+7 = '777'
 
-	true == 1 evaluates to true
-	use === and !== to prevent type coercion in conditionals
+		true == 1 evaluates to true
+		use === and !== to prevent type coercion in conditionals
 
 Guard & Default operators
 	Guard: &&
@@ -1252,7 +1253,7 @@ Hibernate Object States
 		Java-Side only
 		No primary key
 
-	Persistent
+	Persistent (Managed)
 		Has a persistent identity
 		Within the context of a session
 		Even if no DB representation yet, might not be committed, can still be persistent
@@ -1303,6 +1304,19 @@ Alternatives to Session Methods
 	Only had simple CRUD
 
 	Criteria
+		Retrievals only
+		Programmatically create select statements
+		Created from Session
+		.createCriteria(class)
+
+		Can add restrictions:
+			Criteria c = [Session].createCriteria(Bear.class);
+			c.add(Restrictions.eq("fieldName", "value"));
+			c.list();
+
+	Projections
+		Return a single long value
+		.count, .max, .min
 
 	Query
 		Good if you want more than one object
@@ -1320,4 +1334,567 @@ Alternatives to Session Methods
 			.List()
 			.executeUpdate()
 			.uniqueResult() --> Throws NonUniqueResultException
+
+
+
+
+******************** Thursday August 30th ********************
+
+Moar Hibernate
+	Native SQL Queries
+		User session to create
+			.createSQLQuery();
+
+	Cascades
+		(Transitive Persistence)
+		Transmission of state between related entities
+		Enum with available styles
+
+	Caching
+		Storing in runtime memory
+		Keeping a copy of relevant results
+
+		Level 1											Level 2
+		No additional Configuration 					Requires a 3rd party cache provider
+		Happens by default 								(EHCACHE)
+		Scoped to a session 							In SessionFactory section of hibernate.cfg.xml
+		If you do a lot in a session it is 				SessionFactory Scoped
+			helpful to periodically .clear() it.		Used to cache info between sessions
+		.evict(object) to remove 1					
+		Can also use .contains(object) to check 		2 Strategies:
+			if it is present in the cache				Read Only: Assumes objects will not change
+		Watch out for old data!							Read-Write: Checks for updates
+
+DevOps: Development Operations
+	The process of achieving continuous integration, deployment, delivery, etc...
+	Goal: Automate & Streamline delivery from code on your machine to live applications
+
+	Java
+	Maven (build, Test, Package)
+	Tomcat (Web Container)
+	SonarQube(Code Quality Analysis Check)
+	Jenkins (Build configuration manager)
+		Orchestrates the delivery of code
+		Jenkins "Job"
+			Reusable Workflow
+		Jenkins "Build"
+			Execution of work flow
+			Has "Build Trigger"
+
+
+
+
+******************** Tuesday September 4th ********************
+Design Patterns
+	Inversion of Control
+		Allowing a framework to control the running of the app
+		-Delivering dependencies
+		-Managing life-cycles of objects
+		Hollywood Principle: Don't call us we'll call you
+
+	Vs.
+
+	Service Locater Pattern
+		Beans control the instantiation and location of dependencies
+		Library instead of a framework
+
+Spring!
+	A dependency injection framework (An implementation of IOC)
+	Dependency: A resource used
+	Injection: The act of passing a dependency to a dependent object
+
+	Pros:
+		Decoupling of Task Execution & Implementation, more modularity
+
+	Hugely popular java framework
+
+	Spring Container (IOC Container)
+		Exists within app, where dependencies are created and stored
+
+	Spring Beans: Any java object whose life-cycle is managed by the IOC container
+
+	Configuration Meta-data: How we define Spring Beans and how they interact
+		Options:
+			Beans.xml
+			Annotations
+			Java Based config
+
+	Modules
+		Core
+		Beans
+				Between these two we get basic dependency injection features
+		Context: Application Context (IOC) --> Gives us framework style bean access
+		AOP: Aspect Oriented Programming --> Code according to "cross-cutting concerns"
+		MVC: Model View Controller --> For web aware spring apps (Front Controller AF)
+		ORM: Objection Relational Mapping --> Use to manage hibernate
+		Rest: A special case of MVC, which allows us to create a restful API
+		Security: For authentication and authorization
+		Test: Run unit tests w/ Spring
+		Boot: For general application structure
+		Data: For persistence
+		Cloud: Micro-services
+
+	Bean Factory 
+		From Core + Beans
+		Older
+		Lazily instantiates (Creates beans only when requested)
+		Spring beans
+		Factory Pattern
+		Contains bean definitions (Recipes for creating spring beans)
+	
+	Vs. 
+
+	Application Context
+		From Context
+		newer
+		IOC container
+		Superset of BeanFactory
+		Eagerly instantiates (Attempt to instantiate things at application start)
+		Interface, Important Implementations include:
+			ClassPathXmlApplicationContext
+			FileSystemXmlApplicationContext
+			XmlWebApplicationContext
+
+	Bean Wiring: Providing beans to beans
+		DI Types
+			Setter Injection --> Use setter methods to provide dependencies
+				This does not ensure DI (Can create bean without adding dependency)
+				Any polymorphic version of the desired dependency can be used
+			Constructor Injection --> Use constructor to provide dependencies
+
+
+
+
+******************** Wednesday September 5th ********************
+
+Spring Annotations
+	@Component --> Registers a class as a bean
+	@Configuration --> Java based config (On class)
+	@Bean --> Java based config (On method)
+	@Autowired --> Used to wire beans together | Can indicate whether a dependency is required
+	@Inject -->  Similar to @Autowired, but not spring (Uses Provider to do DI, an existing Java feature)
+	@Controller --> Declaring endpoints
+	@Repository --> Registers a class as a bean & that it'll function as a DAO
+	@Service --> Registers a class as a bean and that it'll work as a go-between
+
+
+Bean Scopes
+	Singleton
+		There is only one instance of the object per IOC container
+		Default
+		AC eagerly instantiates these
+	Prototype 
+		A new instance is created every time the bean is requested
+		Good for lightweight beans with conversational state (Properties that will change often)
+
+	Web Scopes
+		Request
+		Session
+		GlobalSession
+		Application
+		WebSocket
+
+Spring Bean Life-cycle
+	Requesting a Bean
+	Instantiation
+		Container creates the bean
+	Populate Properties
+	Calls setBeanName from BeanNameAware
+	Calls setBeanFactory from BeanFactoryAware 
+	PreInitialization (Bean PostProcessors)
+	afterPropertiesSet of InitializingBeans*
+	Custom Init Methods*
+	PostInitialization of BeanPostProcessors
+	Finally ready
+
+	Container Shuts Down
+		DisposableBean destroy()*
+		Custom destroy method*
+
+	*Where we can interact with the Life-cycle
+
+Spring AOP (Unit of Modularity is the Aspect)
+	Break down logic into "cross-cutting concerns" (or aspects)
+	Not related to use cases of the app, but necessary for it to run properly
+
+	Logging!, Security, etc...
+
+	Decide when and how to inject aspect code into our application logic
+	Decouple tasks
+
+	Vocab:
+		Join Point: A place where aspect code can be injected (usually method execution)
+		Advice: The actual code to be injected at the Join Point (Modeled as interceptors)
+			Types
+				Before --> Cannot prevent Join Point from proceeding
+				After
+					Returning --> Normal execution
+					Throwing --> Exceptional execution
+				Around --> Can execute before and after the Join Point
+					Must choose when Join Point proceeds
+		Pointcut: Program element specifying where advice will be applied
+			Pointcut Expression: Predicate indicating which methods/classes/packages can be advised
+
+	AspectJ: Gives us our annotations
+		Used instead of xml based AOP
+
+		@Aspect --> Indicates that a class will contain Advice methods
+			This prevents the class from being Auto-proxied
+				Every bean has a proxy unless it's marked as an aspect
+				The proxy looks for relevant Advice before passing the call along to the target object
+
+		@Before
+		@After(returning/throwing)
+		@Around
+			First parameter to method that it's placed on must be a ProceedingJoinPoint
+
+
+
+
+******************* Thursday September 6th ********************
+
+Spring MVC!
+	How spring applications become web aware
+
+	DispatcherServlet acts as a front controller
+		Has its own application context (XmlWebApplicationContext)
+
+	Steps of Request
+		1) Client makes HTTP request (Routed to D.S. by container consulting web.xml)
+		2) D.S. consults Handler Mapping
+		3) D.S. sends request to appropriate controller, which processes it based on path & HTTP method
+		4) 
+			a) If returning view,controller returns a view name (and adds some data to the model)
+			or
+			b) Just return data
+		5) If 4a D.S. will consult with view resolver which returns actual resource corresponding to view name (and uses view model data to render view)
+		6) Response return to client
+
+	@Controller --> Registers class with IOC container
+	@RequestMapping --> Associates URL pattern with a method or class
+
+	HandlerMapping:
+		Uses our request mappings to help the servlet decide which controller should handle the request
+		RequestMappingHandlerMapping
+			Deprecated version --> DefaultAnnotationHandlerMapping
+
+
+
+
+******************* Monday September 10th ********************
+
+Transaction Propagation
+	Required --> Default
+		Same physical transaction: Inner fails, outer will also fail
+	Requires_NEW
+		New physical transaction created for the Inner transactional method.
+	Nested
+		Represent different save points within the same physical transaction
+	Mandatory
+		Inner transaction must be called from an existing transaction, otherwise fails & throws exception
+	Never
+		Inner transaction must be called outside of an existing transaction, otherwise fails & throws exceptions
+	Not_Supported
+		Going to execute outside of any existing logical transaction and then pause it
+	Supports
+		Executes within the existing scope of a transaction
+
+Spring Boot
+	Deploys itself, packaged as a jar and contains an embedded tomcat server
+	Annotate class at root of package structure with @SpringBootApplication
+
+	@Configuration (Java-based bean definition, etc.)
+	@EnableAutoConfiguration
+	@EnableWebMVC
+	@EnableComponentScan
+
+	application.properties
+		DB Config
+		Static resource locations
+		Server port
+		cloud config
+
+	Actuator
+		Provides operational details of the app
+		Exposes endpoints @AppStart
+
+	DevTools
+		For support during development
+
+
+
+
+******************* Tuesday September 11th ********************
+
+SOA (Service Oriented Architecture)
+	Breaking up a monolithic application into reusable pieces which communicate using web services
+
+	Can break up layers of application (Data Access, Business Logic, Presentation Layer, etc..)
+	OR
+	Can break up your areas of functionality (features)
+
+	Pros:
+		Modularity
+		Separation of Concerns (Different parts of the application are doing different things)
+		Multiple teams can work on the project concurrently
+
+	Cons:
+		Greater complexity of the overall architecture
+		Deployment and delivery become more complicated
+
+Web Services
+	A Web Service is a means of communication over the web between different pieces of software
+	The software which exposes the service and the software which consumes the service are independent
+	Don't need to use HTTP
+	Exposing a web Service --> Creating & sharing it
+	Consuming a web service --> Using/Interacting with it
+
+
+REST (RESTful)
+	REpresentational State Transfer
+	HTTP/HTTPS only
+	Stateless --> Request/Response
+	Expose endpoints with simple URIs
+	No restriction on formate of data
+	No contract:
+		Consumers rely on your documentation
+
+	Design Principles:
+		1. Expose a uniform interface
+		2. Stateless (Necessary state for handling request is within request itself)
+		3. Secure your endpoints as you would the presentation layer
+		4. Layered System --> Consumer does not know what layer of app it's interacting with
+
+	Consuming Rest:
+		RestTemplate
+			Package: org.springframework.web.client
+			getForEntity
+			postForEntity
+
+	Exposing Rest:
+		Controllers & RequestMappings
+		(@RestController --> Special case of @Controller, implicit @ResponseBody)
+		Can also use Raw Servlets or Jersey
+
+	Handling Errors:
+		HTTP Status Codes
+		Handle errors in the most generic way possible
+			Give status code & message, but don't get fancy or specific
+
+
+SOAP Service
+	Simple Object Access Protocol
+	Platform independent (Like REST and all web services)
+
+	SOAP 												REST
+	Exchange Messages in XML only 						Can be any format
+	Typically Business to Business Communications		More Business to Client/Consumer
+		(B2B)
+	Consumed by other Applications
+	Works on multiple protocols							HTTP/HTTPS only
+	Contract Based 										Loose Structure
+
+	Contract Based:
+		WSDL (Web Service Definition Language)
+			XML doc which is the contract
+			Defines all of the available operations within that service & Valid message formats available in service
+
+		Anything with the WSDL can consume service
+		"Contract"/"Endpoint Interface"
+
+	Exposing SOAP:
+		Contract First
+			Have a WSDL and build your java based off of it
+			Tool --> WSImport
+		Contract Last
+			Generate the WSDL from application code
+			Tool --> JaxWS: Using apache CXF (Crossfire)
+				Essentially build an interface and annotate it with @Webservice
+
+	SOAP Message Structure
+		XML Doc Structure:
+			Envelope: Defines start & end of message, Required
+				Header: Any metadata you might want to include, Optional
+				Body: Content of the message, Required
+				Fault: Errors, Optional
+
+	WSDL Tags
+		Definitions: Root
+		Types: All complex types we're exchanging
+		PortType: A set of operations
+		Message: An abstract representation of the data being transmitted
+		Operation: Defines the actions that can be taken within the service (Input/Output messages & Methods)
+		Binding: Concrete protocol and data format definition for a port type
+		Service: A collection of related endpoints which are our ports
+			Port: Specify what binding and where that binding is exposed
+
+		Danny The Pizza Man Put On Big Shoes
+
+	Binding Styles:
+		Document --> Any well-formed xml is fine
+		RPC (Remote Procedure Call) --> Include operation name
+
+		Body Use:
+			Literal --> Contents conform to XSD
+			Encoded --> Not required to conform to XSD
+
+		Default
+		Document/Literal
+		Document/Encoded
+		RPC/Literal
+		RPC/Encoded
+
+	Valid XML
+		Match an existing XSD (XML Schema Definition) or DTD (Document Type Definition)
+
+	Vs
+
+	Well-Written XML
+		Follows XML Syntax 
+
+
+
+
+******************* Wednesday September 12th ********************
+
+Microservices
+	Break an application into pieces that are independent, focused, and modular
+
+	SOA: Client --> API --> Various Services --> Shared DB
+
+	MSA: MicroService Architecture
+		Make services aware of as little as possible
+		Focused on decoupling + eliminating any single points of failure
+		Services are isolated from each other and are ideally very lightweight
+			Do one thing with a very narrow focus
+
+		MS Ecosystem
+		Gateway <--> Services
+		^
+		|
+		|
+		V
+		Discovery
+
+	Service Registry/Discovery
+		How to provide correct service when client makes a request of the gateway
+		We're using Eureka
+		Register our services with Eureka
+		Eureka sends out a heartbeat to check which services are up
+		@EnableEurekaServer to create a Eureka Server
+		To enable discovery we use @EnableDiscoveryClient
+
+	Gateway
+		ZUUL --> Netflix OSS
+		Restrict access to our services and only allow client to interact with our gateway
+
+	Spring Cloud
+		Include Netflix OSS tools as Spring Dependencies
+
+
+
+
+******************* Thursday September 13th ********************
+
+Moar Microservices
+	Starting a Eureka Service
+	After 30 seconds, sends a heartbeat to Eureka
+	Not in registry until this point
+	Eureka maintains a cache of apps, refreshed every 30 seconds
+
+	Filters
+		Four Types:
+			Pre --> Executed before a request is routed to Origin
+				Eg: Authentication, Debug Logging, Choosing Origin Server, etc...
+			Custom --> Any custom filtering. Executes after pre and before routing
+			Routing --> Route request to origin using Apache HttpClient or Netflix Ribbon
+			Post --> After request has been processed by the origin 
+				Eg: Logging & Metrics
+			Error --> Execute if error occurs
+
+	Ribbon
+		Client-side load balancer (From Netflix)
+		Organizing the traffic to distribute the workload between available existing services
+		Included with ZUUL (Used in the background) but can be used with Eureka and no ZUUL
+		Round robin distribution between instances of the same service
+
+	Server-Side Load Balancing
+		Done more with traditional SOA and monoliths
+		Load Balancer contains info about each service besides which to route requests to
+		Has lots of internal logic and configuration determining what services can handle what
+		Very passive services
+
+		Problems:
+			If/when a service stops responding the load balancer needs to be reconfigured.
+
+	Client-Side Load Balancing
+		There's a service registry (Like Eureka)
+		Load Balancer consults Service Registry (Keeps no internal record of available instances)
+
+	Hystrix
+		Used to avoid cascading failures
+		Provide fall backs to fail ~Gracefully~ (Fail fast, fail silently)
+		Implements Circuit Breaking design pattern
+			Prevents down services from receiving any calls
+			Define fall back actions
+
+
+
+
+******************* Friday September 14th ********************
 			
+Messaging Queues
+	Stores messages, commonly used in communications between micro services
+	Some common providers:
+		RabbitMQ
+		Kafka
+		AWS SQS
+	Some use a Pub/Sub model, while others use a polling model
+	Want something that is scalable and can be shared between many services and their replicas
+
+AWS SQS: Simple Queue Service
+	Follows a polling model --> Need to explicitly request messages
+	Tends to be coupled with SNS
+
+	SNS: Simple Notification Service
+		Will let us send messages to topics
+		Topics will push messages to subscribers
+		
+Containers
+	Need environment to run app (the container)
+	Avoid having entire machine dedicated to one application
+
+Docker
+	Image: A read only template for creating a container
+	DockerFile: File with instructions for creating an image --> Use "docker build" to build an image from a DockerFile
+	Container: Runnable instance of an image ("docker run")
+
+
+
+
+******************* Wednesday September 19th ********************
+
+Cluster Orchestration (via Kubernetes)
+	The ability to manage whole suites of applications in a civilized manner
+
+	Cluster: A group of highly available machines which are configured to work together as a single unit
+		Need containerized applications to decouple our application from whatever machine it happens to be running on.
+
+	Kubernetes automates the distribution and scaling of these applications
+
+	Nodes:
+		Master
+			Controls the Cluster
+			Exposes Kubernetes API
+
+		Node
+			Docker: Container tech
+			Kubelet: Manages the node internally, communicates with the Master's exposed Kubernetes API
+
+	Deployment Configuration:
+		Instructions for the Master on how to create and update your application
+
+	Pods:
+		Exists inside of a node
+		Can contain a number of containerized apps and storage volumes (Or other resources)
+		Created when a deployment is given to the Master
